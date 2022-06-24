@@ -14,4 +14,31 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_Arena.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="libs\glfw3.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="libs\glfw3.lib" />
+    <Library Include="libs\glfw3_mt.lib" />
+    <Library Include="libs\glfw3dll.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="libs\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libs\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
