@@ -21,6 +21,9 @@
     <ClCompile Include="FS\FS_Arena.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_Application.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -38,6 +41,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Rendering.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Vector3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Matrix4.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Vector2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Quaternion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FS\FS_Application.c" />
     <ClCompile Include="FS\FS_Arena.h" />
     <ClCompile Include="src\Main.c" />
   </ItemGroup>
@@ -163,7 +164,13 @@
     <Library Include="libs\glfw3_mt.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FS\FS_Application.h" />
     <ClInclude Include="FS\FS_Debug.h" />
+    <ClInclude Include="FS\FS_Matrix4.h" />
+    <ClInclude Include="FS\FS_Quaternion.h" />
+    <ClInclude Include="FS\FS_Rendering.h" />
+    <ClInclude Include="FS\FS_Vector2.h" />
+    <ClInclude Include="FS\FS_Vector3.h" />
     <ClInclude Include="libs\include\GLFW\glfw3.h" />
     <ClInclude Include="libs\include\GLFW\glfw3native.h" />
   </ItemGroup>

@@ -1,32 +1,25 @@
-#include <stdio.h>
-#include <GLFW/glfw3.h>
-
+#include "FS_Application.h"
 #include "FS_Debug.h"
 #include "FS_Arena.h"
 
+#include <stdbool.h>
+
+bool Game_Update(void *userData, Application *app)
+{
+	Debug_Log("Frame");
+}
+
 int main()
 {
-	if (!glfwInit())
-	{
-		Debug_Warn("GLFW library failed to initialize!");
-		return;
-	}
+	ApplicationSettings settings = { 0 };
 
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-	GLFWwindow *window = glfwCreateWindow(1600, 900, "ActionRPG", 0, 0);
+	// Configure window
+	settings.windowSize.x = 1600;
+	settings.windowSize.y = 900;
+	settings.windowTitle = "Example Title";
 
-	if (!window)
-	{
-		Debug_Warn("GLFW failed to create window!");
-		return;
-	}
+	// Setup update loop
+	settings.Update = Game_Update;
 
-	glfwMakeContextCurrent(window);
-
-	while (!glfwWindowShouldClose(window))
-	{
-		glfwPollEvents();
-
-		glfwSwapBuffers(window);
-	}
+	Application_Run(&settings);
 }
