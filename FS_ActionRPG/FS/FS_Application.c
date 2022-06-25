@@ -30,7 +30,7 @@ MouseButton GLFW_LookUpMouseButton(int glfwButton)
 	switch (glfwButton)
 	{
 	case GLFW_MOUSE_BUTTON_LEFT:	return MouseButton_Left;
-	case GLFW_MOUSE_BUTTON_RIGHT:	return MouseButton_Left;
+	case GLFW_MOUSE_BUTTON_RIGHT:	return MouseButton_Right;
 	case GLFW_MOUSE_BUTTON_MIDDLE:	return MouseButton_Middle;
 	}
 	return MouseButton_Unknown;
@@ -102,13 +102,11 @@ void GLFW_KeyCallback(GLFWwindow *window, int key, int scancode, int action, int
 
 	if (action == GLFW_PRESS)
 	{
-		Debug_Log("Press");
 		keyButton->isDown = true;
 		keyButton->transitionCount++;
 	}
 	else if (action == GLFW_RELEASE)
 	{
-		Debug_Log("Release");
 		keyButton->isDown = false;
 		keyButton->transitionCount++;
 	}

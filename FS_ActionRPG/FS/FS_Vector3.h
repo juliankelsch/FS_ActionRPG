@@ -6,14 +6,6 @@ typedef struct
 	float x, y, z;
 } Vector3;
 
-Vector3 Vector3_Add(Vector3 a, Vector3 b)
-{
-	Vector3 result = {
-		a.x + b.x, 
-		a.y + b.y,
-		a.z + b.z
-	};
-	return result;
-}
+Vector3 Vector3_Add(Vector3 a, Vector3 b);
 
 #endif // __FS_VECTOR3_H__
