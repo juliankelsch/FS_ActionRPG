@@ -4,6 +4,7 @@
 #include <stdbool.h>
 
 #include "FS_Vector2.h"
+#include "FS_Input.h"
 
 typedef struct Application Application;
 
@@ -19,5 +20,9 @@ typedef struct
 } ApplicationSettings;
 
 void Application_Run(ApplicationSettings *settings);
+
+Mouse *Application_GetMouse(Application *app);
+Keyboard *Application_GetKeyboard(Application *app);
+TimeInfo *Application_GetTimeInfo(Application *app);
 
 #endif // __FS_APPLICATION__

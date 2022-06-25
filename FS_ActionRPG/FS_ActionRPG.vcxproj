@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClCompile Include="FS\FS_Application.c" />
     <ClCompile Include="FS\FS_Arena.h" />
+    <ClCompile Include="FS\FS_DigitalButton.c" />
+    <ClCompile Include="FS\FS_Vector2.c" />
     <ClCompile Include="src\Main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +168,8 @@
   <ItemGroup>
     <ClInclude Include="FS\FS_Application.h" />
     <ClInclude Include="FS\FS_Debug.h" />
+    <ClInclude Include="FS\FS_Engine.h" />
+    <ClInclude Include="FS\FS_Input.h" />
     <ClInclude Include="FS\FS_Matrix4.h" />
     <ClInclude Include="FS\FS_Quaternion.h" />
     <ClInclude Include="FS\FS_Rendering.h" />

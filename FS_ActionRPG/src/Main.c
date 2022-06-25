@@ -1,12 +1,17 @@
-#include "FS_Application.h"
-#include "FS_Debug.h"
-#include "FS_Arena.h"
-
-#include <stdbool.h>
+#include "FS_Engine.h"
 
 bool Game_Update(void *userData, Application *app)
 {
-	Debug_Log("Frame");
+	Mouse *mouse = Application_GetMouse(app);
+
+	if (WasPressedThisFrame(mouse->leftButton))
+	{
+		return false;
+	}
+
+	Debug_Log("Mouse [%.1f, %.1f]", mouse->position.x, mouse->position.y);
+
+	return true;
 }
 
 int main()

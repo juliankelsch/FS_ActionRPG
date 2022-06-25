@@ -24,6 +24,12 @@
     <ClCompile Include="FS\FS_Application.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_Vector2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_DigitalButton.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -59,6 +65,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
