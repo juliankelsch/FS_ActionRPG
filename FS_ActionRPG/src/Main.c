@@ -3,13 +3,17 @@
 bool Game_Update(void *userData, Application *app)
 {
 	Mouse *mouse = Application_GetMouse(app);
+	Keyboard *kb = Application_GetKeyboard(app);
 
-	if (WasPressedThisFrame(mouse->leftButton))
+	if (WasPressedThisFrame(kb->keys[Key_Escape]))
 	{
 		return false;
 	}
 
-	Debug_Log("Mouse [%.1f, %.1f]", mouse->position.x, mouse->position.y);
+	if (WasHeldFor(kb->keyW, 2.0f))
+	{
+		return false;
+	}
 
 	return true;
 }
