@@ -38,6 +38,11 @@ float Mathf_Degrees(float radians)
 	return (radians / Mathf_Pi) * 180.0f;
 }
 
+float Mathf_Abs(float x)
+{
+	return fabsf(x);
+}
+
 float Mathf_Sin(float x)
 {
 	return sinf(x);

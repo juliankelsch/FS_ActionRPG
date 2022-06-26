@@ -10,6 +10,7 @@ float Mathf_Clamp01(float x);
 float Mathf_MapToRange(float x, float fromLow, float fromHigh, float toLow, float toHigh);
 float Mathf_Radians(float degrees);
 float Mathf_Degrees(float radians);
+float Mathf_Abs(float x);
 
 float Mathf_Sin(float x);
 float Mathf_Cos(float x);
