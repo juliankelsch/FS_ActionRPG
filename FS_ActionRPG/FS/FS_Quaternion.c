@@ -64,15 +64,15 @@ Quaternion Quaternion_Slerp(Quaternion a, Quaternion b, float t)
         cos_half_theta = -cos_half_theta;
     }
 
-    float half_theta = Math_ArcCos(cos_half_theta);
-    float sin_half_theta = Math_Sqrt(1.0f - cos_half_theta * cos_half_theta);
-    if (Math_Abs(sin_half_theta) < 0.001)
+    float half_theta = Mathf_Acos(cos_half_theta);
+    float sin_half_theta = Mathf_Sqrt(1.0f - cos_half_theta * cos_half_theta);
+    if (Mathf_Abs(sin_half_theta) < 0.001)
     {
 		return Quaternion_Multiply_F(Quaternion_Add(a, bb), 0.5f);
     }
 
-    float ratio_a = Math_Sin((1.0f - t) * half_theta) / sin_half_theta;
-    float ratio_b = Math_Sin((t) * half_theta) / sin_half_theta;
+    float ratio_a = Mathf_Sin((1.0f - t) * half_theta) / sin_half_theta;
+    float ratio_b = Mathf_Sin((t) * half_theta) / sin_half_theta;
 	return Quaternion_Add(Quaternion_Multiply_F(a, ratio_a), Quaternion_Multiply_F(b, ratio_b));
 }
 

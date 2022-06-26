@@ -3,6 +3,17 @@
 #include <stdint.h>
 #include <string.h> // memcopy
 
+void Matrix4_Create(Matrix4 m, float m00, float m01, float m02, float m03,
+    float m10, float m11, float m12, float m13,
+    float m20, float m21, float m22, float m23,
+    float m30, float m31, float m32, float m33)
+{
+	m[0][0] = m00; m[0][1] = m01; m[0][2] = m02; m[0][3] = m03;
+	m[1][0] = m10; m[1][1] = m11; m[1][2] = m12; m[1][3] = m13;
+	m[2][0] = m20; m[2][1] = m21; m[2][2] = m22; m[2][3] = m23;
+	m[3][0] = m30; m[3][1] = m31; m[3][2] = m32; m[3][3] = m33;
+}
+
 void Matrix4_Identity(Matrix4 m)
 {
 	m[0][0] = 1; m[0][1] = 0; m[0][2] = 0; m[0][3] = 0;
@@ -159,7 +170,7 @@ bool Matrix4_Inverse(Matrix4 res, Matrix4 src)
         return false;
 
     det = 1.0f / det;
-    Matrix4_Multiply_F(res, inv, det);
+    Matrix4_Multiply_F(res, (Matrix4Row*)inv, det);
 
     return true;
 }
@@ -248,3 +259,48 @@ Vector3 Matrix4_Multiply_Direction3(Matrix4 m, Vector3 d)
     return Vector3_From_V4(transformed);
 }
 
+void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target)
+{
+	Vector3 z = Vector3_Direction(eye, target);
+	Vector3 x = Vector3_Normalized(Vector3_Cross(z, (Vector3){0, 1, 0}));
+	Vector3 y = Vector3_Normalized(Vector3_Cross(x, z));
+
+	z = Vector3_Multiply_F(z, -1.0f);
+
+	Matrix4_Create(m,
+		x.x, x.y, x.z, -Vector3_Dot(eye, x),
+		y.x, y.y, y.z, -Vector3_Dot(eye, y),
+		z.x, z.y, z.z, -Vector3_Dot(eye, z),
+		0, 0, 0, 1
+	);
+}
+
+void Matrix4_Orthographic(Matrix4 m, float l, float r, float t, float b, float n, float f)
+{
+	Matrix4_Create(m,
+		2.0f / (r - l), 0, 0, -(r + l) / (r - l),
+		0, 2.0f / (t - b), 0, -(t + b) / (t - b),
+		0, 0, -2.0f / (f - n), -(f + n) / (f - n),
+		0, 0, 0, 1
+	);
+}
+
+void Matrix4_Frustum(Matrix4 m, float l, float r, float t, float b, float n, float f)
+{
+	Matrix4_Create(m,
+		(2.0f * n) / (r - l), 0, (r + l) / (r - l), 0,
+		0, (2.0f * n) / (t - b), (t + b) / (t - b), 0,
+		0, 0, -(f + n) / (f - n), -(2.0f * f * n) / (f - n),
+		0, 0, -1, 0
+	);
+}
+
+void Matrix4_Perspective(Matrix4 m, float fovy, float aspect, float near, float far)
+{
+	float top = Mathf_Tan(fovy / 2.0f) * near;
+	float bot = -top;
+	float right = top * aspect;
+	float left = bot * aspect;
+
+	Matrix4_Frustum(m, left, right, top, bot, near, far);
+}

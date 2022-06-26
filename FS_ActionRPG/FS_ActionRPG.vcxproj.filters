@@ -42,6 +42,9 @@
     <ClCompile Include="FS\FS_Mathf.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_Quaternion.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />

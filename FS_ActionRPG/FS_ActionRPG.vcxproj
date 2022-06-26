@@ -157,6 +157,7 @@
     <ClCompile Include="FS\FS_DigitalButton.c" />
     <ClCompile Include="FS\FS_Mathf.c" />
     <ClCompile Include="FS\FS_Matrix4.c" />
+    <ClCompile Include="FS\FS_Quaternion.c" />
     <ClCompile Include="FS\FS_Vector2.c" />
     <ClCompile Include="FS\FS_Vector3.c" />
     <ClCompile Include="src\Main.c" />
