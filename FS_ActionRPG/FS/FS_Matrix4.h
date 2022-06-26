@@ -20,8 +20,11 @@ bool Matrix4_Inverse(Matrix4 res, Matrix4 m);
 
 void Matrix4_Add(Matrix4 res, Matrix4 a, Matrix4 b);
 void Matrix4_Subtract(Matrix4 res, Matrix4 a, Matrix4 b);
-void Matrix4_Multiply_M4(Matrix4 res, Matrix4 a, Matrix4 b);
+void Matrix4_Multiply(Matrix4 res, Matrix4 a, Matrix4 b);
 void Matrix4_Multiply_F(Matrix4 res, Matrix4 m, float s);
+
+void Matrix4_Translation(Matrix4 m, Vector3 t);
+void Matrix4_Scale(Matrix4 m, Vector3 s);
 
 Vector4 Matrix4_Multiply_V4(Matrix4 m, Vector4 p);
 

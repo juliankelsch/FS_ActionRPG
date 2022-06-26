@@ -3,81 +3,104 @@
 typedef struct
 {
 	Vector3 position;
+	Quaternion rotation;
 	Vector3 localScale;
 } Transform;
 
 typedef struct
 {
-	Vector3 position;
-	Vector3 normal;
-	Vector2 texCoords;
-	Color color;
-} Vertex;
+	float x, y, width, height;
+} Rect;
 
 typedef struct
 {
-	uint32_t vertexCount;
-	uint32_t indexCount;
+	int32_t x, y;
+	int32_t width, height;
+} RectInt;
 
-	Vertex *vertices;
-	uint32_t *indices;
-} Mesh;
-
-Mesh Mesh_CreateQuad(Arena *arena)
+void Transform_Create(Transform *transform)
 {
-	Mesh quad = { 0 };
+	transform->position = (Vector3){0, 0, 0};
+	transform->rotation = (Quaternion){1, 0, 0, 0};
+	transform->localScale = (Vector3){0, 0, 0};
+}
 
-	quad.vertexCount = 4;
-	quad.indexCount = 6;
-	quad.vertices = Arena_PushArray(arena, quad.vertexCount, Vertex);
-	quad.indices =	Arena_PushArray(arena, quad.indexCount, uint32_t);
+void Transform_GetMatrix(Transform *transform, Matrix4 out)
+{
+	Matrix4 translation, rotation, localScale;
+	Matrix4_Translation(translation, transform->position);
+	Quaternion_ToMatrix(rotation, transform->rotation);
+	Matrix4_Scale(localScale, transform->localScale);
+	Matrix4 rs;
+	Matrix4_Multiply(rs, rotation, localScale);
+	Matrix4_Multiply(out, translation, rs);
+}
 
-	Vector3 normal = { 0, 0, 1 };
-	Color color = { 255, 255, 255, 255 };
+typedef struct
+{
+	Vector3 position;
+	Vector3 target;
 
-	quad.vertices[0] = (Vertex){ {-0.5f, 0.5f}, normal, {0.0f, 1.0f}, color };
-	quad.vertices[1] = (Vertex){ {0.5f, 0.5f}, normal, {1.0f, 1.0f}, color };
-	quad.vertices[2] = (Vertex){ {-0.5f, -0.5f}, normal, { 0.0f, 0.0f }, color};
-	quad.vertices[3] = (Vertex){ {0.5f, -0.5f}, normal, { 1.0f, 0.0f }, color};
+	RectInt viewport;
+	float fovy;
+	float near, far;
+} Camera;
 
-	quad.indices[0] = 0;
-	quad.indices[1] = 2;
-	quad.indices[2] = 1;
+void Camera_CreateDefault(Camera *camera, uint32_t viewportWidth, uint32_t viewportHeight)
+{
+	camera->position = (Vector3){0, 2, 5};
+	camera->target = (Vector3){0, 0, 0};
+	camera->viewport = (RectInt){ 0, 0, viewportWidth, viewportHeight };
+	camera->fovy = Mathf_Radians(70.0f);
+	camera->near = 0.1f;
+	camera->far = 100.0f;
+}
 
-	quad.indices[3] = 1;
-	quad.indices[4] = 2;
-	quad.indices[5] = 3;
+void Camera_GetProjectionMatrix(Camera *camera, Matrix4 out)
+{
+	Matrix4_Perspective(out, camera->fovy, (float)camera->viewport.width / camera->viewport.height, camera->near, camera->far);
+}
 
-	return quad;
+void Camera_GetViewMatrix(Camera *camera, Matrix4 out)
+{
+	Matrix4_LookAt(out, camera->position, camera->target);
 }
 
 typedef struct
 {
 	bool isInitialized;
 	Arena *arena;
+
 	Texture2D texture;
 	GLuint textureID;
+	Camera camera;
 	Mesh quad;
+	Mesh plane;
 } State;
-
-typedef struct
-{
-	int32_t x, y;
-	int32_t width, height;
-} RectangleInt;
 
 const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 900;
 static State state = { 0 };
 
-
-Texture2D Texture2D_Create(Arena *arena, uint16_t width, uint16_t height)
+void OpenGL_ApplyCamera(Camera *camera)
 {
-	Texture2D result = { 
-		width, height, 
-		Arena_PushArray(arena, width * height, Color)
-	};
-	return result;
+	glViewport(camera->viewport.x, camera->viewport.y, camera->viewport.width, camera->viewport.height);
+
+	Matrix4 projection, view;
+	Camera_GetProjectionMatrix(camera, projection);
+	Camera_GetViewMatrix(camera, view);
+
+	Matrix4 oglProjection, oglView;
+	Matrix4_Transpose(oglProjection, projection);
+	Matrix4_Transpose(oglView, view);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glLoadMatrixf(&oglProjection[0][0]);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	glLoadMatrixf(&oglView[0][0]);
 }
 
 GLuint OpenGL_CreateTexture(Texture2D *texture)
@@ -91,50 +114,6 @@ GLuint OpenGL_CreateTexture(Texture2D *texture)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	return id;
-}
-
-Texture2D Texture2D_CreateCircle(Arena *arena, uint16_t size, float innerRadius, float outerRadius)
-{
-	Texture2D texture = { size, size, Arena_PushArray(arena, size * size, Color) };
-
-	Color transparent = { 0, 0, 0, 0 };
-	Color white = { 255, 255, 255, 255 };
-	Color red = { 255, 0, 0, 255};
-
-	float inner = innerRadius * 0.5f;
-	float outer = outerRadius * 0.5f;
-	
-	for (size_t i = 0; i < texture.height; i++)
-	{
-		for (size_t j = 0; j < texture.width; j++)
-		{
-			float s = (float)j / (texture.width - 1);
-			float t = (float)i / (texture.height - 1);
-
-			float dist = Mathf_Sqrt((s - 0.5f) * (s - 0.5f) + (t - 0.5f) * (t - 0.5f));
-
-			Color *pixel = texture.pixels + (i * texture.width + j);
-			if (dist <= outer)
-			{
-				if (dist <= inner)
-				{
-					*pixel = white;
-				}
-				else
-				{
-					float alpha = Mathf_MapToRange(dist, inner, outer, 1.0f, 0.0f);
-					Color mixed = { 255, 255, 255, alpha * 255 };
-					*pixel = mixed;
-				}
-			}
-			else
-			{
-				*pixel = transparent;
-			}
-		}
-	}
-
-	return texture;
 }
 
 void OpenGL_DrawMesh(Mesh *mesh)
@@ -160,14 +139,26 @@ void OpenGL_ApplyTransform(Transform *transform)
 void State_Initialize(State *state)
 {
 	state->arena = Arena_Create(250 * 1000 * 1000);
-	state->texture = Texture2D_CreateCircle(state->arena, 256, 0.95f, 1.0f);
+	state->texture = Texture2D_CreateCircle(state->arena, 256, 0.0f, 1.0f);
 	state->textureID = OpenGL_CreateTexture(&state->texture);
-	state->quad = Mesh_CreateQuad(state->arena);
+	state->quad = Mesh_CreateCube(state->arena);
+	state->plane = Mesh_CreatePlane(state->arena, (Vector3){1, 0, 0}, (Vector3){0, 0, 1}, 5);
+	Camera_CreateDefault(&state->camera, SCREEN_WIDTH, SCREEN_HEIGHT);
 	state->isInitialized = true;
 }
 
+typedef enum
+{
+	PipelineFlag_Textured,
+	PipelineFlag_ShowWireframe,
+} PipelineFlag;
 
-bool Game_Update(void *userData, Application *app)
+typedef struct
+{
+	uint32_t pipelineFlags;
+} Material;
+
+bool State_Update(void *userData, Application *app)
 {
 	State *state = (State *)userData;
 	if (!state->isInitialized)
@@ -183,31 +174,42 @@ bool Game_Update(void *userData, Application *app)
 		return false;
 	}
 
-	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-	glColor3f(1.0f, 1.0f, 1.0f);
+	OpenGL_ApplyCamera(&state->camera);
 
+	// clear
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	float aspect = (float)SCREEN_WIDTH / SCREEN_HEIGHT;
-	glOrtho(-aspect, aspect, -1, 1, 1, -1);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
+	// pipelineEnable
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	// material
+	glColor3f(1, 1, 1);
+	glDisable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, state->textureID);
 
-	glColor3f(1, 1, 1);
-	glEnable(GL_TEXTURE_2D);
 
-	Transform transform = { {0.0f, 0.0f, 0.0f}, { 1.0f, 0.5f, 1.0f } };
-	OpenGL_ApplyTransform(&transform);
+	glFrontFace(GL_CCW);
+	glEnable(GL_CULL_FACE);
+	if (WasHeldThisFrame(kb->keys[Key_Space]))
+	{
+		glCullFace(GL_FRONT);
+	}
+	else
+	{
+		glCullFace(GL_BACK);
+	}
+
+	Transform transform = { {0.0f, 0.0f, 0.0f}, { 1.0f, 1.0f, 1.0f } };
+	//OpenGL_ApplyTransform(&transform);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	OpenGL_DrawMesh(&state->quad);
+
+	
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	OpenGL_DrawMesh(&state->plane);
+	
 
 	return true;
 }
@@ -224,7 +226,7 @@ int main()
 	settings.userData = &state;
 
 	// Setup update loop
-	settings.Update = Game_Update;
+	settings.Update = State_Update;
 
 	Application_Run(&settings);
 }

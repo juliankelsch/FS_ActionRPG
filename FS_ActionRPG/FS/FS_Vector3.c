@@ -63,7 +63,7 @@ float Vector3_Dot(Vector3 a, Vector3 b)
 
 float Vector3_Length(Vector3 v)
 {
-	return sqrtf(Vector3_Dot(v, v));
+	return Mathf_Sqrt(Vector3_Dot(v, v));
 }
 
 Vector3 Vector3_Normalized(Vector3 v)

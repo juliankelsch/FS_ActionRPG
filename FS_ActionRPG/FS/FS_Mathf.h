@@ -1,9 +1,32 @@
 #ifndef __FS_MATHF_H__
 #define __FS_MATHF_H__
 
+typedef enum
+{
+	Ease_Linear,
+	Ease_QuadIn,
+	Ease_QuadOut,
+} Ease;
+
+typedef enum
+{
+	Axis_X,
+	Axis_Y,
+	Axis_Z,
+} Axis;
+
+typedef enum
+{
+	Direction_Up,
+	Direction_Right,
+	Direction_Down,
+	Direction_Left
+} Direction;
+
 #define Mathf_Pi 3.141592653f
 
 float Mathf_Lerp(float a, float b, float t);
+float Mathf_Ease(float x, Ease ease);
 float Mathf_Sqrt(float x);
 float Mathf_Clamp(float x, float low, float high);
 float Mathf_Clamp01(float x);

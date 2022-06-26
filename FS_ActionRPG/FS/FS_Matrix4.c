@@ -201,7 +201,7 @@ void Matrix4_Subtract(Matrix4 res, Matrix4 a, Matrix4 b)
 	Matrix4_Copy(res, temp);
 }
 
-void Matrix4_Multiply_M4(Matrix4 res, Matrix4 a, Matrix4 b)
+void Matrix4_Multiply(Matrix4 res, Matrix4 a, Matrix4 b)
 {
 	Matrix4 temp;
 	for (size_t i = 0; i < 4; i++)
@@ -257,6 +257,26 @@ Vector3 Matrix4_Multiply_Direction3(Matrix4 m, Vector3 d)
     Vector4 dir = { d.x, d.y, d.z, 0.0f };
     Vector4 transformed = Matrix4_Multiply_V4(m, dir);
     return Vector3_From_V4(transformed);
+}
+
+void Matrix4_Translation(Matrix4 m, Vector3 t)
+{
+    Matrix4_Create(m,
+        1, 0, 0, t.x,
+        0, 1, 0, t.y,
+        0, 0, 1, t.z,
+        0, 0, 0, 1
+    );
+}
+
+void Matrix4_Scale(Matrix4 m, Vector3 s)
+{
+    Matrix4_Create(m,
+        s.x, 0, 0, 0,
+        0, s.y, 0, 0,
+        0, 0, s.z, 0,
+        0, 0, 0, 1
+    );
 }
 
 void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target)

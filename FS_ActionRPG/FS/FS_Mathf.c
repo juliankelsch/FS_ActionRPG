@@ -7,6 +7,20 @@ float Mathf_Lerp(float a, float b, float t)
 	return (1.0f - t) * a + t * b;
 }
 
+float Mathf_Ease(float x, Ease ease)
+{
+	switch (ease)
+	{
+	case Ease_QuadIn:
+		return x * x;
+	case Ease_QuadOut:
+		return 1.0f - (1.0f - x) * (1.0f - x);
+	default:
+		return x;
+		break;
+	}
+}
+
 float Mathf_Sqrt(float x)
 {
 	return sqrtf(x);
