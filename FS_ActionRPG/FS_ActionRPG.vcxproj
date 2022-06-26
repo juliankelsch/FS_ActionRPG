@@ -155,6 +155,8 @@
     <ClCompile Include="FS\FS_Arena.h" />
     <ClCompile Include="FS\FS_Color.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
+    <ClCompile Include="FS\FS_Mathf.c" />
+    <ClCompile Include="FS\FS_Matrix4.c" />
     <ClCompile Include="FS\FS_Vector2.c" />
     <ClCompile Include="FS\FS_Vector3.c" />
     <ClCompile Include="src\Main.c" />
@@ -173,6 +175,7 @@
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
     <ClInclude Include="FS\FS_Input.h" />
+    <ClInclude Include="FS\FS_Mathf.h" />
     <ClInclude Include="FS\FS_Matrix4.h" />
     <ClInclude Include="FS\FS_OpenGL.h" />
     <ClInclude Include="FS\FS_Quaternion.h" />
@@ -180,6 +183,7 @@
     <ClInclude Include="FS\FS_Texture2D.h" />
     <ClInclude Include="FS\FS_Vector2.h" />
     <ClInclude Include="FS\FS_Vector3.h" />
+    <ClInclude Include="FS\FS_Vector4.h" />
     <ClInclude Include="libs\include\GLFW\glfw3.h" />
     <ClInclude Include="libs\include\GLFW\glfw3native.h" />
   </ItemGroup>

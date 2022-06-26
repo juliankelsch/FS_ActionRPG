@@ -1,33 +1,5 @@
 #include "FS_Engine.h"
 
-#include <math.h>
-
-float Mathf_Lerp(float a, float b, float t)
-{
-	return (1.0f - t) * a + t * b;
-}
-
-float Mathf_Sqrt(float x)
-{
-	return sqrtf(x);
-}
-
-float Mathf_Clamp(float x, float low, float high)
-{
-	return x < low ? low : (x > high ? high : x);
-}
-
-float Mathf_Clamp01(float x)
-{
-	return Mathf_Clamp(x, 0.0f, 1.0f);
-}
-
-float Mathf_MapToRange(float x, float fromLow, float fromHigh, float toLow, float toHigh)
-{
-	float percent = (x - fromLow) / (fromHigh - fromLow);
-	return Mathf_Lerp(toLow, toHigh, percent);
-}
-
 typedef struct
 {
 	Vector3 position;
@@ -233,7 +205,7 @@ bool Game_Update(void *userData, Application *app)
 	glColor3f(1, 1, 1);
 	glEnable(GL_TEXTURE_2D);
 
-	Transform transform = { {0.0f, 1.0f, 0.0f}, { 1.0f, 0.5f, 1.0f } };
+	Transform transform = { {0.0f, 0.0f, 0.0f}, { 1.0f, 0.5f, 1.0f } };
 	OpenGL_ApplyTransform(&transform);
 	OpenGL_DrawMesh(&state->quad);
 

@@ -9,5 +9,6 @@
 #include "FS_Matrix4.h"
 #include "FS_OpenGL.h"
 #include "FS_Texture2D.h"
+#include "FS_Mathf.h"
 
 #endif // __FS_ENGINE_H__
