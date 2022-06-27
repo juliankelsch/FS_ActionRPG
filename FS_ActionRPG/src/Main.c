@@ -48,7 +48,7 @@ typedef struct
 
 void Camera_CreateDefault(Camera *camera, uint32_t viewportWidth, uint32_t viewportHeight)
 {
-	camera->position = (Vector3){0, 2, 5};
+	camera->position = (Vector3){0, 4, 5};
 	camera->target = (Vector3){0, 0, 0};
 	camera->viewport = (RectInt){ 0, 0, viewportWidth, viewportHeight };
 	camera->fovy = Mathf_Radians(70.0f);
@@ -74,8 +74,14 @@ typedef struct
 	Texture2D texture;
 	GLuint textureID;
 	Camera camera;
+
 	Mesh quad;
+	Mesh cube;
 	Mesh plane;
+	Mesh sphere;
+	Mesh circle;
+	Mesh cone;
+	Mesh cylinder;
 } State;
 
 const int SCREEN_WIDTH = 1600;
@@ -130,6 +136,34 @@ void OpenGL_DrawMesh(Mesh *mesh)
 	glEnd();
 }
 
+void OpenGL_DrawMesh_Colored(Mesh *mesh, Color color)
+{
+	glBegin(GL_TRIANGLES);
+	for (size_t i = 0; i < mesh->indexCount; i++)
+	{
+		Vertex *vertex = mesh->vertices + mesh->indices[i];
+		glColor4ub(color.r, color.g, color.b, color.a);
+		glNormal3f(vertex->normal.x, vertex->normal.y, vertex->normal.z);
+		glTexCoord2f(vertex->texCoords.x, vertex->texCoords.y);
+		glVertex3f(vertex->position.x, vertex->position.y, vertex->position.z);
+	}
+	glEnd();
+}
+
+void OpenGL_DrawMeshPoints(Mesh *mesh)
+{
+	glBegin(GL_POINTS);
+	for (size_t i = 0; i < mesh->vertexCount; i++)
+	{
+		Vertex *vertex = mesh->vertices + i;
+		glColor4ub(vertex->color.r, vertex->color.g, vertex->color.b, vertex->color.a);
+		glNormal3f(vertex->normal.x, vertex->normal.y, vertex->normal.z);
+		glTexCoord2f(vertex->texCoords.x, vertex->texCoords.y);
+		glVertex3f(vertex->position.x, vertex->position.y, vertex->position.z);
+	}
+	glEnd();
+}
+
 void OpenGL_ApplyTransform(Transform *transform)
 {
 	glTranslatef(transform->position.x, transform->position.y, transform->position.z);
@@ -141,8 +175,15 @@ void State_Initialize(State *state)
 	state->arena = Arena_Create(250 * 1000 * 1000);
 	state->texture = Texture2D_CreateCircle(state->arena, 256, 0.0f, 1.0f);
 	state->textureID = OpenGL_CreateTexture(&state->texture);
-	state->quad = Mesh_CreateCube(state->arena);
+
+	state->quad = Mesh_CreateQuad(state->arena);
+	state->cube = Mesh_CreateCube(state->arena);
+	state->sphere = Mesh_CreateSphere(state->arena, 16, 32);
 	state->plane = Mesh_CreatePlane(state->arena, (Vector3){1, 0, 0}, (Vector3){0, 0, 1}, 5);
+	state->circle = Mesh_CreateCircle(state->arena, 0.5f, 32);
+	state->cone = Mesh_CreateCone(state->arena, 1.0f, 0.5f, 32);
+	state->cylinder = Mesh_CreateCylinder(state->arena, 1.0f, 0.5f, 32);
+
 	Camera_CreateDefault(&state->camera, SCREEN_WIDTH, SCREEN_HEIGHT);
 	state->isInitialized = true;
 }
@@ -190,7 +231,6 @@ bool State_Update(void *userData, Application *app)
 	glBindTexture(GL_TEXTURE_2D, state->textureID);
 
 
-	glFrontFace(GL_CCW);
 	glEnable(GL_CULL_FACE);
 	if (WasHeldThisFrame(kb->keys[Key_Space]))
 	{
@@ -203,13 +243,19 @@ bool State_Update(void *userData, Application *app)
 
 	Transform transform = { {0.0f, 0.0f, 0.0f}, { 1.0f, 1.0f, 1.0f } };
 	//OpenGL_ApplyTransform(&transform);
+
+	/*
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	OpenGL_DrawMesh(&state->quad);
 
 	
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	OpenGL_DrawMesh(&state->plane);
-	
+	OpenGL_DrawMeshPoints(&state->plane);
+	*/
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	OpenGL_DrawMesh_Colored(&state->cylinder, Color_Red);
 
 	return true;
 }

@@ -27,6 +27,15 @@ typedef struct
 Mesh Mesh_CreateQuad(Arena *arena);
 Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, uint32_t subDivisions);
 Mesh Mesh_CreateCube(Arena *arena);
+Mesh Mesh_CreateSphere(Arena *arena, uint32_t horizontalSlices, uint32_t verticalSlices);
+Mesh Mesh_CreateCircle(Arena *arena, float radius, uint32_t segments);
+Mesh Mesh_CreateCone(Arena *arena, float height, float radius, uint32_t segments);
+Mesh Mesh_CreateCylinder(Arena *arena, float height, float radius, uint32_t segments);
+/*
+Mesh Mesh_CreateCapsule(Arena *arena);
+Mesh Mesh_CreateCone(Arena *arena);
+*/
+
 void Mesh_ApplyTransform(Mesh *mesh, Matrix4 transform);
 Mesh Mesh_Combine(Arena *arena, Mesh *meshA, Mesh *meshB);
 

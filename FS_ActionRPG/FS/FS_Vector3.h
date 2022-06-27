@@ -9,6 +9,20 @@ typedef struct
 	float x, y, z;
 } Vector3;
 
+#define Vector3_Zero	(Vector3){0.0f, 0.0f, 0.0f}
+#define Vector3_One		(Vector3){1.0f, 1.0f, 1.0f}
+
+#define Vector3_X (Vector3){1.0f, 0.0f, 0.0f}
+#define Vector3_Y (Vector3){0.0f, 1.0f, 0.0f}
+#define Vector3_Z (Vector3){0.0f, 0.0f, 1.0f}
+
+#define Vector3_Right	(Vector3){ 1.0f,  0.0f,  0.0f}
+#define Vector3_Left	(Vector3){-1.0f,  0.0f,  0.0f}
+#define Vector3_Up		(Vector3){ 0.0f,  1.0f,  0.0f}
+#define Vector3_Down	(Vector3){ 0.0f, -1.0f,  0.0f}
+#define Vector3_Forward (Vector3){ 0.0f,  0.0f,  1.0f}
+#define Vector3_Back	(Vector3){ 0.0f,  0.0f, -1.0f}
+
 Vector3 Vector3_Create(float x, float y, float z);
 Vector3 Vector3_Add(Vector3 a, Vector3 b);
 Vector3 Vector3_Subtract(Vector3 a, Vector3 b);
