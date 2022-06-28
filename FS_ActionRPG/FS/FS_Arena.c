@@ -1,6 +1,8 @@
 #include "FS_Arena.h"
 #include "FS_Debug.h"
 
+#include <stdlib.h>
+
 Arena *Arena_Create(uint32_t arenaSize)
 {
 	uint8_t* memory = (uint8_t*)calloc(1, arenaSize + sizeof(Arena));

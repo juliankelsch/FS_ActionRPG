@@ -2,7 +2,7 @@
 #define __FS_ARENA_H__
 
 #include <stdint.h>
-#include <stdlib.h>
+#include <stddef.h>
 
 #define ALIGNMENT_OF(Type) offsetof(struct {Type t; char x; }, x)
 

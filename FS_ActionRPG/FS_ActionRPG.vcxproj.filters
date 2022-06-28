@@ -54,6 +54,9 @@
     <ClCompile Include="FS\FS_Arena.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_Assets.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -116,6 +119,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_Macros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Assets.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Buffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

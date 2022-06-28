@@ -86,7 +86,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)/libs/include;$(ProjectDir)/FS/;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -103,7 +103,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)/libs/include;$(ProjectDir)/FS/;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -120,7 +120,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)/libs/include;$(ProjectDir)/FS/;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -137,7 +137,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)/libs/include;$(ProjectDir)/FS/;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -154,6 +154,7 @@
     <ClCompile Include="FS\FS_Application.c" />
     <ClCompile Include="FS\FS_Arena.c" />
     <ClCompile Include="FS\FS_Arena.h" />
+    <ClCompile Include="FS\FS_Assets.c" />
     <ClCompile Include="FS\FS_Color.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
     <ClCompile Include="FS\FS_Mathf.c" />
@@ -175,9 +176,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FS\FS_Application.h" />
+    <ClInclude Include="FS\FS_Assets.h" />
+    <ClInclude Include="FS\FS_Buffer.h" />
     <ClInclude Include="FS\FS_Color.h" />
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
+    <ClInclude Include="FS\FS_Font.h" />
     <ClInclude Include="FS\FS_Input.h" />
     <ClInclude Include="FS\FS_Macros.h" />
     <ClInclude Include="FS\FS_Mathf.h" />
@@ -186,6 +190,7 @@
     <ClInclude Include="FS\FS_OpenGL.h" />
     <ClInclude Include="FS\FS_Quaternion.h" />
     <ClInclude Include="FS\FS_Rendering.h" />
+    <ClInclude Include="FS\FS_stb_truetype.h" />
     <ClInclude Include="FS\FS_Texture2D.h" />
     <ClInclude Include="FS\FS_Vector2.h" />
     <ClInclude Include="FS\FS_Vector3.h" />

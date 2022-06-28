@@ -1,7 +1,6 @@
 #ifndef __FS_ENGINE_H__
 #define __FS_ENGINE_H__
 
-
 #include "FS_Application.h"
 #include "FS_Debug.h"
 #include "FS_Arena.h"
@@ -13,5 +12,6 @@
 #include "FS_Mathf.h"
 #include "FS_Mesh.h"
 #include "FS_Texture2D.h"
+#include "FS_Assets.h"
 
 #endif // __FS_ENGINE_H__

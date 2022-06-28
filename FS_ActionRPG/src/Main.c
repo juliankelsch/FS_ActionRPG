@@ -75,6 +75,8 @@ typedef struct
 	GLuint textureID;
 	Camera camera;
 
+	TrueTypeFont font;
+
 	Mesh quad;
 	Mesh cube;
 	Mesh plane;
@@ -164,6 +166,37 @@ void OpenGL_DrawMeshPoints(Mesh *mesh)
 	glEnd();
 }
 
+void OpenGL_AssignFontTexture(TrueTypeFont *font)
+{
+    glGenTextures(1, &font->textureID);
+    glBindTexture(GL_TEXTURE_2D, font->textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, font->bitmap.width, font->bitmap.height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, font->bitmap.pixels);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+}
+
+void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *text)
+{
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, font->textureID);
+    glBegin(GL_QUADS);
+
+    while (*text) {
+        if (*text >= font->firstChar && *text < (font->firstChar + font->charCount)) {
+            stbtt_aligned_quad q;
+            stbtt_GetBakedQuad(font->chars, font->bitmap.width, font->bitmap.height, *text - 32, &x, &y, &q, 1);//1=opengl & d3d10+,0=d3d9
+            glTexCoord2f(q.s1, q.t0); glVertex2f(q.x1, q.y0);
+            glTexCoord2f(q.s0, q.t0); glVertex2f(q.x0, q.y0);
+            glTexCoord2f(q.s0, q.t1); glVertex2f(q.x0, q.y1);
+            glTexCoord2f(q.s1, q.t1); glVertex2f(q.x1, q.y1);
+        }
+        ++text;
+    }
+    glEnd();
+}
+
 void OpenGL_ApplyTransform(Transform *transform)
 {
 	glTranslatef(transform->position.x, transform->position.y, transform->position.z);
@@ -183,6 +216,8 @@ void State_Initialize(State *state)
 	state->circle = Mesh_CreateCircle(state->arena, 0.5f, 32);
 	state->cone = Mesh_CreateCone(state->arena, 1.0f, 0.5f, 32);
 	state->cylinder = Mesh_CreateCylinder(state->arena, 1.0f, 0.5f, 32);
+	Assets_LoadFont(&state->font, 20.0f, "resources/fonts/RobotoMono-Medium.ttf");
+	OpenGL_AssignFontTexture(&state->font);
 
 	Camera_CreateDefault(&state->camera, SCREEN_WIDTH, SCREEN_HEIGHT);
 	state->isInitialized = true;
@@ -253,9 +288,29 @@ bool State_Update(void *userData, Application *app)
 	OpenGL_DrawMeshPoints(&state->plane);
 	*/
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	OpenGL_DrawMesh_Colored(&state->cylinder, Color_Red);
+
+
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, state->font.textureID);
+	glScalef(10, 10, 10);
+	OpenGL_DrawMesh(&state->quad);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 1, -1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glColor3f(1, 1, 1);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	OpenGL_DrawText(&state->font, 100, 100, "Zehra ist komisch.");
 
 	return true;
 }
