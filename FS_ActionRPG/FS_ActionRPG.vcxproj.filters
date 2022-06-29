@@ -57,6 +57,18 @@
     <ClCompile Include="FS\FS_Assets.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_Camera.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_OpenGL.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_Transform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_Json.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -131,6 +143,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_Buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Rectangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Json.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
