@@ -221,6 +221,32 @@ typedef struct
 
 JsonValue *JsonParser_ParseValue(JsonParser *parser);
 
+uint32_t JsonParser_GetTokenCountInCurrentScope(JsonParser *parser, JsonTokenType type)
+{
+	uint32_t tokenCount = 0;
+	uint32_t scope = 0;
+
+	JsonToken *at = parser->at;
+	while (scope >= 0 && at->type != JsonTokenType_End)
+	{
+		if (at->type == type && scope == 0)
+		{
+			tokenCount++;
+		}
+		
+		scope += at->type == JsonTokenType_BracketOpen || at->type == JsonTokenType_CurlyBraceOpen;
+		scope -= at->type == JsonTokenType_BracketClose || at->type == JsonTokenType_CurlyBraceClose;
+		at++;
+	}
+
+	return tokenCount;
+}
+
+uint32_t JsonParser_GetAttributeCount(JsonParser *parser)
+{
+	return JsonParser_GetTokenCountInCurrentScope(parser, JsonTokenType_Colon);
+}
+
 JsonObject *JsonParser_ParseObject(JsonParser *parser)
 {
 	Debug_Assert(parser->at->type == JsonTokenType_CurlyBraceOpen);
@@ -229,7 +255,9 @@ JsonObject *JsonParser_ParseObject(JsonParser *parser)
 	JsonObject *object = Arena_Push(parser->arena, JsonObject);
 	// TODO peek attribute count
 	object->attributeCount = 0;
-	object->attributes = Arena_PushArray(parser->arena, 100, JsonAttribute);
+	object->attributes = Arena_PushArray(parser->arena, 
+		JsonParser_GetTokenCountInCurrentScope(parser, JsonTokenType_Colon), 
+		JsonAttribute);
 
 	JsonAttribute *attribute = object->attributes;
 	while (parser->at->type != JsonTokenType_CurlyBraceClose)
@@ -282,9 +310,9 @@ JsonArray *JsonParser_ParseArray(JsonParser *parser)
 	parser->at++;
 
 	JsonArray *array = Arena_Push(parser->arena, JsonArray);
-	// TODO peek count
+
 	array->count = 0;
-	array->values = Arena_PushArray(parser->arena, 100, JsonValue*);
+	array->values = Arena_PushArray(parser->arena, JsonParser_GetTokenCountInCurrentScope(parser, JsonTokenType_Comma) + 1, JsonValue *);
 
 	JsonValue **value = array->values;
 	while (parser->at->type != JsonTokenType_BracketClose)
@@ -410,6 +438,6 @@ JsonValue *Json_Parse(Arena *arena, const char *string)
 {
 	JsonToken *tokens = Json_Tokenize(arena, string);
 	JsonValue *result = Json_ParseTokens(arena, tokens);
-	//PrintJson(result);
+	PrintJson(result);
 	return result;
 }

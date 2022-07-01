@@ -104,6 +104,10 @@ typedef struct
 			DigitalButton keyA;
 			DigitalButton keyS;
 			DigitalButton keyD;
+			
+			DigitalButton keySpace;
+			DigitalButton keyEscape;
+			DigitalButton keyReturn;
 		};
 	};
 } Keyboard;

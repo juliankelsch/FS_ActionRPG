@@ -85,7 +85,8 @@ void OpenGL_AssignFontTexture(TrueTypeFont *font)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 }
 
-void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *text)
+
+void OpenGL_DrawTextInternal(TrueTypeFont *font, float x, float y, const char *text)
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -107,8 +108,15 @@ void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *text)
     glEnd();
 }
 
-void OpenGL_ApplyTransform(Transform *transform)
+#include <stdio.h>
+
+void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *format, ...)
 {
-	glTranslatef(transform->position.x, transform->position.y, transform->position.z);
-	glScalef(transform->localScale.x, transform->localScale.y, transform->localScale.z);
+	va_list args;
+	va_start(args, format);
+	char buffer[1024] = { 0 };
+	vsprintf(buffer, format, args);
+	va_end(args);
+
+	OpenGL_DrawTextInternal(font, x, y, buffer);
 }

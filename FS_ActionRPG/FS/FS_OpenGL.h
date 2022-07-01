@@ -3,6 +3,8 @@
 
 #include <GLFW/glfw3.h>
 
+#include <stdarg.h>
+
 #include "FS_Camera.h"
 #include "FS_Texture2D.h"
 #include "FS_Mesh.h"
@@ -15,7 +17,6 @@ void OpenGL_DrawMesh(Mesh *mesh);
 void OpenGL_DrawMesh_Colored(Mesh *mesh, Color color);
 void OpenGL_DrawMeshPoints(Mesh *mesh);
 void OpenGL_AssignFontTexture(TrueTypeFont *font);
-void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *text);
-void OpenGL_ApplyTransform(Transform *transform);
+void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *format, ...);
 
 #endif // __FS_OPENGL_H__

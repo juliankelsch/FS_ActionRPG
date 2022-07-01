@@ -33,7 +33,7 @@ Mesh Mesh_CreateQuad(Arena *arena)
 	return quad;
 }
 
-Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, uint32_t subDivisions)
+Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, float size, uint32_t subDivisions)
 {
 	Mesh mesh = { 0 };
 
@@ -55,9 +55,9 @@ Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, uint32_t subDi
 			float a = (float)j / (edgeCount - 1);
 			float b = (float)i / (edgeCount - 1);
 
-			vertex->position.x = ((baseA.x * a + baseB.x * b) - (0.5f * (baseA.x + baseB.x)));
-			vertex->position.y = ((baseA.y * a + baseB.y * b) - (0.5f * (baseA.y + baseB.y)));
-			vertex->position.z = ((baseA.z * a + baseB.z * b) - (0.5f * (baseA.z + baseB.z)));
+			vertex->position.x = ((baseA.x * a + baseB.x * b) - (0.5f * (baseA.x + baseB.x))) * size;
+			vertex->position.y = ((baseA.y * a + baseB.y * b) - (0.5f * (baseA.y + baseB.y))) * size;
+			vertex->position.z = ((baseA.z * a + baseB.z * b) - (0.5f * (baseA.z + baseB.z))) * size;
 
 			vertex->normal = normal;
 			vertex->color = color;

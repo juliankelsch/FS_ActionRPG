@@ -21,5 +21,6 @@ typedef struct
 
 Color Color_RGB(float red, float green, float blue);
 Color Color_RGBA(float red, float green, float blue, float alpha);
+Color Color_Hex(uint32_t hexCode);
 
 #endif //  __FS_COLOR_H__

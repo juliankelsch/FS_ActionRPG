@@ -25,7 +25,7 @@ typedef struct
 } Mesh;
 
 Mesh Mesh_CreateQuad(Arena *arena);
-Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, uint32_t subDivisions);
+Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, float size, uint32_t subDivisions);
 Mesh Mesh_CreateCube(Arena *arena);
 Mesh Mesh_CreateSphere(Arena *arena, uint32_t horizontalSlices, uint32_t verticalSlices);
 Mesh Mesh_CreateCircle(Arena *arena, float radius, uint32_t segments);

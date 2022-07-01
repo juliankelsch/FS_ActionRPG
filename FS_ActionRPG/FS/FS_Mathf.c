@@ -1,6 +1,7 @@
 #include "FS_Mathf.h"
 
 #include <math.h>
+#include <stdlib.h>
 
 float Mathf_Lerp(float a, float b, float t)
 {
@@ -55,6 +56,11 @@ float Mathf_Degrees(float radians)
 float Mathf_Abs(float x)
 {
 	return fabsf(x);
+}
+
+float Mathf_Random01(float x)
+{
+	return (float)rand() / RAND_MAX;
 }
 
 float Mathf_Sin(float x)

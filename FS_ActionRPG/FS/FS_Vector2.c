@@ -78,11 +78,8 @@ Vector2 Vector2_NormalizedSafe(Vector2 v)
 	{
 		return Vector2_Multiply_F(v, 1.0f / mag);
 	}
-	else
-	{
-		Debug_Warn("Dividing Vector2[%.2f, %.2f] by zero.", v.x, v.y);
-		return v;
-	}
+
+	return v;
 }
 
 Vector2 Vector2_GetNormal(Vector2 v)

@@ -6,6 +6,7 @@
 #include "FS_Arena.h"
 #include "FS_Vector2.h"
 #include "FS_Vector3.h"
+#include "FS_Ray.h"
 #include "FS_Matrix4.h"
 #include "FS_Quaternion.h"
 #include "FS_Rectangle.h"

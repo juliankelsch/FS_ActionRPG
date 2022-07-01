@@ -20,5 +20,15 @@ Color Color_RGBA(float red, float green, float blue, float alpha)
 		alpha * 255
 	};
 	return color;
+}
 
+Color Color_Hex(uint32_t hexCode)
+{
+	Color color = {
+		hexCode >> 24,
+		hexCode >> 16,
+		hexCode >> 8,
+		hexCode
+	};
+	return color;
 }

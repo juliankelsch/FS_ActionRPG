@@ -129,7 +129,7 @@ void ClearInput(Application *app)
 	}
 }
 
-void PreprocessEvents(Application *app)
+void PostProcessEvents(Application *app)
 {
 	Keyboard *keyboard = &app->keyboard;
 	Mouse *mouse = &app->mouse;
@@ -212,7 +212,7 @@ void Application_Run(ApplicationSettings *settings)
 		mouse->position = Vector2_Create((float)mouseX, (float)mouseY);
 		mouse->motion = Vector2_Subtract(mouse->position, oldMouse);
 
-		PreprocessEvents(&_app);
+		PostProcessEvents(&_app);
 
 		if (settings->Update)
 		{

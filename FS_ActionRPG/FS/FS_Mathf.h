@@ -1,6 +1,8 @@
 #ifndef __FS_MATHF_H__
 #define __FS_MATHF_H__
 
+#include <float.h>
+
 typedef enum
 {
 	Ease_Linear,
@@ -24,6 +26,8 @@ typedef enum
 } Direction;
 
 #define Mathf_Pi 3.141592653f
+#define Mathf_Infinity FLT_MAX
+#define Mathf_NegativeInfinity FLT_MIN
 
 float Mathf_Lerp(float a, float b, float t);
 float Mathf_Ease(float x, Ease ease);
@@ -34,6 +38,8 @@ float Mathf_MapToRange(float x, float fromLow, float fromHigh, float toLow, floa
 float Mathf_Radians(float degrees);
 float Mathf_Degrees(float radians);
 float Mathf_Abs(float x);
+
+float Mathf_Random01();
 
 float Mathf_Sin(float x);
 float Mathf_Cos(float x);
