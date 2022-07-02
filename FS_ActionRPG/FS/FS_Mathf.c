@@ -58,6 +58,16 @@ float Mathf_Abs(float x)
 	return fabsf(x);
 }
 
+float Mathf_Min(float a, float b)
+{
+	return fminf(a, b);
+}
+
+float Mathf_Max(float a, float b)
+{
+	return fmaxf(a, b);
+}
+
 float Mathf_Random01(float x)
 {
 	return (float)rand() / RAND_MAX;

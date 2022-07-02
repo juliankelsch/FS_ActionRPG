@@ -158,6 +158,8 @@
     <ClCompile Include="FS\FS_Camera.c" />
     <ClCompile Include="FS\FS_Color.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
+    <ClCompile Include="FS\FS_Font.c" />
+    <ClCompile Include="FS\FS_GUI.c" />
     <ClCompile Include="FS\FS_Json.c" />
     <ClCompile Include="FS\FS_Mathf.c" />
     <ClCompile Include="FS\FS_Matrix4.c" />
@@ -166,6 +168,8 @@
     <ClCompile Include="FS\FS_Print.c" />
     <ClCompile Include="FS\FS_Quaternion.c" />
     <ClCompile Include="FS\FS_Ray.c" />
+    <ClCompile Include="FS\FS_Rectangle.c" />
+    <ClCompile Include="FS\FS_RenderList2D.c" />
     <ClCompile Include="FS\FS_String.c" />
     <ClCompile Include="FS\FS_Texture2D.c" />
     <ClCompile Include="FS\FS_Transform.c" />
@@ -190,6 +194,7 @@
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
     <ClInclude Include="FS\FS_Font.h" />
+    <ClInclude Include="FS\FS_GUI.h" />
     <ClInclude Include="FS\FS_Input.h" />
     <ClInclude Include="FS\FS_Json.h" />
     <ClInclude Include="FS\FS_Macros.h" />
@@ -202,6 +207,7 @@
     <ClInclude Include="FS\FS_Ray.h" />
     <ClInclude Include="FS\FS_Rectangle.h" />
     <ClInclude Include="FS\FS_Rendering.h" />
+    <ClInclude Include="FS\FS_RenderList2D.h" />
     <ClInclude Include="FS\FS_stb_truetype.h" />
     <ClInclude Include="FS\FS_String.h" />
     <ClInclude Include="FS\FS_Texture2D.h" />
@@ -209,6 +215,7 @@
     <ClInclude Include="FS\FS_Vector2.h" />
     <ClInclude Include="FS\FS_Vector3.h" />
     <ClInclude Include="FS\FS_Vector4.h" />
+    <ClInclude Include="FS\FS_Vertex2D.h" />
     <ClInclude Include="libs\include\GLFW\glfw3.h" />
     <ClInclude Include="libs\include\GLFW\glfw3native.h" />
   </ItemGroup>

@@ -1,5 +1,22 @@
+#define FS_OPENGL_1_0
 #include "FS_Engine.h"
-#include "FS_Json.h"
+
+// Planned
+// 
+// Profiler
+// GUI
+// Commandline
+// Entitysystem
+// Sound system
+// Particle system
+// Modern GL
+// Asset ssytem
+// Skinned Animations
+// Threads
+
+// 2D Renderer for images
+// 3D Renderer for (textured/colored quads and meshes, skinned meshes)
+
 
 typedef struct
 {
@@ -43,6 +60,10 @@ typedef struct
 	bool hit;
 	RayHitInfo hitInfo;
 
+	FontFamily fontFamily;
+	TextStyle textStyle;
+	RenderList2D renderList;
+
 	Player player;
 } Game;
 
@@ -66,6 +87,31 @@ void Game_Initialize(Game *game)
 	game->cylinder = Mesh_CreateCylinder(game->arena, 1.0f, 0.5f, 32);
 	Assets_LoadFont(&game->font, 20.0f, "resources/fonts/RobotoMono-Medium.ttf");
 	OpenGL_AssignFontTexture(&game->font);
+
+	Assets_LoadFontFamily(&game->fontFamily, 25.0f, 
+		"resources/fonts/RobotoMono-Medium.ttf",
+		"resources/fonts/RobotoMono-Bold.ttf",
+		"resources/fonts/RobotoMono-MediumItalic.ttf",
+		"resources/fonts/RobotoMono-BoldItalic.ttf"
+	);
+
+	/*
+	Assets_LoadFontFamily(&game->fontFamily, 25.0f, 
+		"resources/fonts/SourceCodePro-Medium.ttf",
+		"resources/fonts/SourceCodePro-Bold.ttf",
+		"resources/fonts/SourceCodePro-MediumItalic.ttf",
+		"resources/fonts/SourceCodePro-BoldItalic.ttf"
+	);
+	*/
+
+	for (size_t i = 0; i < FontStyle_Count; i++)
+	{
+		OpenGL_AssignFontTexture(game->fontFamily.fonts + i);
+	}
+
+	GUI_TextStyle_CreateDefault(&game->textStyle);
+
+	RenderList2D_Init(&game->renderList, game->arena, (Rect) {0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT}, 1000, 5000, 20000);
 
 	Camera_CreateDefault(&game->camera, SCREEN_WIDTH, SCREEN_HEIGHT);
 	/*
@@ -112,7 +158,46 @@ void RenderUI(Game *game)
 
 	//OpenGL_DrawText(&game->font, 0, 100, "Player position [%.2f, %.2f, %.2f]", game->player.position.x, game->player.position.y, game->player.position.z);
 
-	DrawVector3(&game->font, 0, 20, "Player position", game->player.position);
+	RenderList2D *list = &game->renderList;
+	Rect bounds = { 0, 0, 400, SCREEN_HEIGHT};
+
+	//RenderList2D_SetBounds(list, bounds);
+	RenderList2D_DrawRect(list, bounds, Color_Hex(0x000000BB));
+
+	float inset = -10;
+	RectOffsets textInset = {inset, inset, inset, inset};
+	Rect textBounds = Rect_GetOffsetRect(bounds, textInset);
+
+	//RenderList2D_SetBounds(list, textBounds);
+
+	Vector2 pos = {textBounds.x, textBounds.y};
+	game->textStyle.colorMode = ColorMode_Normal;
+	game->textStyle.overflow = OverflowMode_Ignore;
+	game->textStyle.alignment.vertical = VAlignment_Center;
+	game->textStyle.alignment.horizontal = HAlignment_Center;
+	game->textStyle.color = Color_White;
+	game->textStyle.bold = false;
+	game->textStyle.italic = true;
+	game->textStyle.lineSpacing = 1.0f;
+	game->textStyle.characterSpacing = 1.0f;
+	game->textStyle.textCase = TextCase_Normal;
+	RenderList2D_DrawText(&game->renderList, &game->fontFamily, pos, textBounds, &game->textStyle, "This is some centered poem\nThis is some centered poem\nThis is some centered poem\nThis is some centered poem\nThis is some centered poem\n");
+
+	game->textStyle.colorMode = ColorMode_Gradient;
+	game->textStyle.gradientColors[Corner_TopLeft] = Color_Green;
+	game->textStyle.gradientColors[Corner_TopRight] = Color_Green;
+	game->textStyle.gradientColors[Corner_BotLeft] = Color_Cyan;
+	game->textStyle.gradientColors[Corner_BotRight] = Color_Cyan;
+	game->textStyle.alignment.vertical = VAlignment_Top;
+	game->textStyle.alignment.horizontal = HAlignment_Center;
+	game->textStyle.bold = true;
+	game->textStyle.italic = true;
+	game->textStyle.textCase = TextCase_Upper;
+	game->textStyle.characterSpacing = 1.4f;
+	RenderList2D_DrawText(&game->renderList, &game->fontFamily, pos, textBounds, &game->textStyle, "Editor");
+
+	//DrawVector3(&game->font, 0, 20, "Player position", game->player.position);
+	OpenGL_DrawList(&game->renderList, SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 void Game_Simulate(Game *game)
@@ -193,6 +278,11 @@ bool Game_Update(void *userData, Application *app)
 
 	OpenGL_ApplyCamera(&game->camera);
 
+	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	glDisable(GL_SCISSOR_TEST);
+	glScissor(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -208,7 +298,7 @@ bool Game_Update(void *userData, Application *app)
 	OpenGL_DrawMesh_Colored(&game->playerMesh, Color_Red);
 	glPopMatrix();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	OpenGL_DrawMesh_Colored(&game->groundMesh, Color_Hex(0x444444FF));
 
 	if (game->hit)
@@ -224,6 +314,7 @@ bool Game_Update(void *userData, Application *app)
 	}
 
 	RenderUI(game);
+	RenderList2D_Clear(&game->renderList);
 	return true;
 }
 

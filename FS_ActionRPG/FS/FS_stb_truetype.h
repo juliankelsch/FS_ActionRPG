@@ -1,3 +1,12 @@
+// IMPORTANT
+// 
+// This is not the original stb_truetype.h file but a modified version.
+//
+// Modifications:
+//    stbtt_GetBakedQuad: additional parameter 'char_spacing'
+// 
+// @contact Julian Kelsch (juliankelsch97@gmail.com)
+//
 // stb_truetype.h - v1.26 - public domain
 // authored from 2009-2021 by Sean Barrett / RAD Game Tools
 //
@@ -550,7 +559,8 @@ extern "C" {
         int char_index,             // character to display
         float *xpos, float *ypos,   // pointers to current position in screen pixel space
         stbtt_aligned_quad *q,      // output: quad to draw
-        int opengl_fillrule);       // true if opengl fill rule; false if DX9 or earlier
+        int opengl_fillrule,        // true if opengl fill rule; false if DX9 or earlier
+        float char_spacing);        // IMPORTANT: Not part of the origin stb_truetype (see top of file)
 // Call GetBakedQuad with char_index = 'character - first_char', and it
 // creates the quad you need to draw and advances the current position.
 //
@@ -3907,7 +3917,7 @@ static int stbtt_BakeFontBitmap_internal(unsigned char *data, int offset,  // fo
     return bottom_y;
 }
 
-STBTT_DEF void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, int pw, int ph, int char_index, float *xpos, float *ypos, stbtt_aligned_quad *q, int opengl_fillrule)
+STBTT_DEF void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, int pw, int ph, int char_index, float *xpos, float *ypos, stbtt_aligned_quad *q, int opengl_fillrule, float char_spacing)
 {
     float d3d_bias = opengl_fillrule ? 0 : -0.5f;
     float ipw = 1.0f / pw, iph = 1.0f / ph;
@@ -3925,7 +3935,7 @@ STBTT_DEF void stbtt_GetBakedQuad(const stbtt_bakedchar *chardata, int pw, int p
     q->s1 = b->x1 * ipw;
     q->t1 = b->y1 * iph;
 
-    *xpos += b->xadvance;
+    *xpos += char_spacing * b->xadvance;
 }
 
 //////////////////////////////////////////////////////////////////////////////

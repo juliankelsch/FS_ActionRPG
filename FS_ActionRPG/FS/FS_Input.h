@@ -112,4 +112,11 @@ typedef struct
 	};
 } Keyboard;
 
+typedef struct
+{
+	Keyboard *keyboard;
+	Mouse *mouse;
+	TimeInfo *timeInfo;
+} Input;
+
 #endif // __FS_INPUT_H__

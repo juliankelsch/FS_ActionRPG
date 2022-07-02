@@ -78,6 +78,18 @@
     <ClCompile Include="FS\FS_Ray.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_RenderList2D.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_GUI.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_Font.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FS\FS_Rectangle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -173,6 +185,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_RenderList2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_GUI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_Vertex2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

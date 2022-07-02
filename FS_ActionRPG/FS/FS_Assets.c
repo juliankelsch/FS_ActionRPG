@@ -12,6 +12,14 @@ void Assets_FreeFont(TrueTypeFont *font)
 	Assets_FreeBitmap(&font->bitmap);
 }
 
+void Assets_FreeFontFamily(FontFamily *font)
+{
+	for (size_t i = 0; i < FontStyle_Count; i++)
+	{
+		Assets_FreeBitmap(font->fonts + i);
+	}
+}
+
 void Assets_FreeAny(void *buffer)
 {
 	free(buffer);
@@ -96,10 +104,26 @@ bool Assets_LoadFont(TrueTypeFont *font, float height, const char *filepath)
 
 		Assets_FreeFile(&ttfBuffer);
 
+		font->centerY = TrueTypeFont_CalculateCenterOffsetY(font);
+
 		return true;
 	}
 
 	return false;
+}
+
+bool Assets_LoadFontFamily(FontFamily *family, float height,
+	const char *normalPath,
+	const char *boldPath,
+	const char *italicPath,
+	const char *boldItalicPath
+)
+{
+	bool success = Assets_LoadFont(family->fonts + FontStyle_Normal, height, normalPath);
+	success = Assets_LoadFont(family->fonts + FontStyle_Bold, height, boldPath) && success;
+	success = Assets_LoadFont(family->fonts + FontStyle_Italic, height, italicPath) && success;
+	success = Assets_LoadFont(family->fonts + FontStyle_BoldItalic, height, boldItalicPath) && success;
+	return success;
 }
 
 

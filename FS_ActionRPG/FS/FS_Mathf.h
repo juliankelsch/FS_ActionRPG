@@ -38,6 +38,8 @@ float Mathf_MapToRange(float x, float fromLow, float fromHigh, float toLow, floa
 float Mathf_Radians(float degrees);
 float Mathf_Degrees(float radians);
 float Mathf_Abs(float x);
+float Mathf_Min(float a, float b);
+float Mathf_Max(float a, float b);
 
 float Mathf_Random01();
 

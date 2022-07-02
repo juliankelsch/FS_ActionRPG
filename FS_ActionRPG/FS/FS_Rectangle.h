@@ -13,4 +13,11 @@ typedef struct
 	int32_t x, y, width, height;
 } RectInt;
 
+typedef struct
+{
+	float top, left, bot, right;
+} RectOffsets;
+
+Rect Rect_GetOffsetRect(Rect rect, RectOffsets offsets);
+
 #endif // __FS_RECTANGLE_H__

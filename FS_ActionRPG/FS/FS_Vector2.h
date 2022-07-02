@@ -13,9 +13,9 @@ typedef struct
 	float x, y;
 } Vector2;
 
-#define Vector3_Zero (Vector2){0.0f, 0.0f}
-#define Vector3_X (Vector2){0.0f, 0.0f}
-#define Vector3_Y (Vector2){0.0f, 1.0f}
+#define Vector2_Zero (Vector2){0.0f, 0.0f}
+#define Vector2_X (Vector2){0.0f, 0.0f}
+#define Vector2_Y (Vector2){0.0f, 1.0f}
 
 Vector2 Vector2_Create(float x, float y);
 Vector2 Vector2_Add(Vector2 a, Vector2 b);
