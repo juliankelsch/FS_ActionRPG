@@ -19,26 +19,6 @@ void GUI_Destroy(GUI *gui);
 void GUI_BeginFrame(GUI *gui);
 void GUI_EndFrame(GUI *gui);
 
-typedef enum
-{
-	HAlignment_Left,
-	HAlignment_Center,
-	HAlignment_Right,
-} HAlignment;
-
-typedef enum
-{
-	VAlignment_Top,
-	VAlignment_Center,
-	VAlignment_Bot
-} VAlignment;
-
-typedef struct
-{
-	HAlignment horizontal;
-	VAlignment vertical;
-} Alignment;
-
 
 typedef struct
 {
@@ -85,7 +65,7 @@ typedef struct
 	Color content;
 } GUI_BoxModelColors;
 
-Rect GUI_BoxModel_FillRect(GUI_BoxModel *model, Rect rect);
+Rect GUI_BoxModel_FitToParent(GUI_BoxModel *model, Rect parent);
 
 typedef struct
 {

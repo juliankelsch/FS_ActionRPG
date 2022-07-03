@@ -19,7 +19,7 @@ void OpenGL_DrawMesh_Colored(Mesh *mesh, Color color);
 void OpenGL_DrawMeshPoints(Mesh *mesh);
 void OpenGL_AssignFontTexture(TrueTypeFont *font);
 void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *format, ...);
-
+void OpenGL_DrawAxis();
 void OpenGL_DrawList(RenderList2D *list, float screenWidth, float screenHeight);
 
 #endif // __FS_OPENGL_H__

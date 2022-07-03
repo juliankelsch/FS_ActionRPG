@@ -279,6 +279,24 @@ void Matrix4_Scale(Matrix4 m, Vector3 s)
     );
 }
 
+void Matrix4_Basis(Matrix4 m, Vector3 x, Vector3 y, Vector3 z)
+{
+    Matrix4_Create(m,
+        x.x, y.x, z.x, 0,
+        x.y, y.y, z.y, 0,
+        x.z, y.z, z.z, 0,
+        0, 0, 0, 1
+    );
+}
+
+void Matrix4_BasisP(Matrix4 m, Vector3 x, Vector3 y, Vector3 z, Vector3 position)
+{
+    Matrix4_Basis(m, x, y, z);
+    m[0][3] = position.x;
+    m[1][3] = position.y;
+    m[2][3] = position.z;
+}
+
 void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target)
 {
 	Vector3 z = Vector3_Direction(eye, target);

@@ -10,6 +10,7 @@ struct Application
 	TimeInfo timeInfo;
 	Mouse mouse;
 	Keyboard keyboard;
+	Vector2Int screen;
 };
 
 static Application _app = { 0 };
@@ -172,7 +173,7 @@ void Application_Run(ApplicationSettings *settings)
 		return;
 	}
 
-	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+	//glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 	GLFWwindow *window = glfwCreateWindow(settings->windowSize.x, settings->windowSize.y, settings->windowTitle, 0, 0);
 
 	if (!window)
@@ -212,6 +213,7 @@ void Application_Run(ApplicationSettings *settings)
 		mouse->position = Vector2_Create((float)mouseX, (float)mouseY);
 		mouse->motion = Vector2_Subtract(mouse->position, oldMouse);
 
+		glfwGetFramebufferSize(window, &_app.screen.x, &_app.screen.y);
 		PostProcessEvents(&_app);
 
 		if (settings->Update)
@@ -220,6 +222,11 @@ void Application_Run(ApplicationSettings *settings)
 		}
 		glfwSwapBuffers(window);
 	}
+}
+
+Vector2Int Application_GetScreenSize(Application *app)
+{
+	return app->screen;
 }
 
 Mouse *Application_GetMouse(Application *app)

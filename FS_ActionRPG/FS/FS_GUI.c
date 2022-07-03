@@ -89,7 +89,7 @@ void GUI_EditEnum(GUI *gui, const char *label, const char **names, uint32_t *val
 void GUI_EditFlags(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
 
-Rect GUI_BoxModel_FillRect(GUI_BoxModel *model, Rect rect)
+Rect GUI_BoxModel_FitToParent(GUI_BoxModel *model, Rect rect)
 {
 	Rect contentArea = rect;
 

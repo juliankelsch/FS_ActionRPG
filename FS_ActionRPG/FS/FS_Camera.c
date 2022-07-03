@@ -19,3 +19,22 @@ void Camera_GetViewMatrix(Camera *camera, Matrix4 out)
 {
 	Matrix4_LookAt(out, camera->position, camera->target);
 }
+
+Vector3 Camera_Y(Camera *camera)
+{
+	Vector3 z = Camera_Z(camera);;
+	Vector3 x = Vector3_NormalizedSafe(Vector3_Cross(z, Vector3_Y));
+	return Vector3_NormalizedSafe(Vector3_Cross(x, z));
+}
+
+Vector3 Camera_X(Camera *camera)
+{
+
+	Vector3 z = Camera_Z(camera);;
+	return Vector3_NormalizedSafe(Vector3_Cross(z, Vector3_Y));
+}
+
+Vector3 Camera_Z(Camera *camera)
+{
+	return Vector3_Direction(camera->target, camera->position);
+}

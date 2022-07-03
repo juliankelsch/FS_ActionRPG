@@ -21,6 +21,7 @@ typedef struct
 
 void Application_Run(ApplicationSettings *settings);
 
+Vector2Int Application_GetScreenSize(Application *app);
 Mouse *Application_GetMouse(Application *app);
 Keyboard *Application_GetKeyboard(Application *app);
 TimeInfo *Application_GetTimeInfo(Application *app);

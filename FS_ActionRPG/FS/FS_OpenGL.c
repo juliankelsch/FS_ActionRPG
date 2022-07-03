@@ -121,6 +121,25 @@ void OpenGL_DrawText(TrueTypeFont *font, float x, float y, const char *format, .
 	OpenGL_DrawTextInternal(font, x, y, buffer);
 }
 
+void OpenGL_DrawAxis()
+{
+	glBegin(GL_LINES);
+	{
+		glColor3f(1, 0, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(1, 0, 0);
+
+		glColor3f(0, 1, 0);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 1, 0);
+
+		glColor3f(0, 0, 1);
+		glVertex3f(0, 0, 0);
+		glVertex3f(0, 0, 1);
+	}
+	glEnd();
+}
+
 void OpenGL_DrawList(RenderList2D *list, float screenWidth, float screenHeight)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -132,7 +151,7 @@ void OpenGL_DrawList(RenderList2D *list, float screenWidth, float screenHeight)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	glEnable(GL_SCISSOR_TEST);
+	//glEnable(GL_SCISSOR_TEST);
 	glDisable(GL_DEPTH_TEST);
 
 	for (size_t i = 0; i < list->drawCallCount; i++)

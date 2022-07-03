@@ -16,6 +16,26 @@ typedef enum
 	Corner_Count
 } Corner;
 
+typedef enum
+{
+	HAlignment_Left,
+	HAlignment_Center,
+	HAlignment_Right,
+} HAlignment;
+
+typedef enum
+{
+	VAlignment_Top,
+	VAlignment_Center,
+	VAlignment_Bot
+} VAlignment;
+
+typedef struct
+{
+	HAlignment horizontal;
+	VAlignment vertical;
+} Alignment;
+
 typedef union
 {
 	struct
@@ -55,7 +75,13 @@ typedef struct
 
 Rect Rect_GetOffsetRect(Rect rect, RectOffsets offsets);
 Rect Rect_GetInsetRect(Rect rect, RectOffsets offsets);
-Rect Rect_GetAnchoredRect(Rect parent, RectAnchors anchors);
+Rect Rect_AnchorToParent(Rect parent, RectAnchors anchors);
+RectAnchors Rect_GetAlignedAnchors(RectAnchors anchors, Alignment alignment);
+RectAnchors Rect_GetAlignedAnchorsHorizontal(RectAnchors anchors, HAlignment alignment);
+RectAnchors Rect_GetAlignedAnchorsVertical(RectAnchors anchors, VAlignment alignment);
+Rect Rect_GetAlignedRect(Rect parent, Rect child, Alignment alignment);
+Rect Rect_GetAlignedRectHorizontal(Rect parent, Rect child, HAlignment alignment);
+Rect Rect_GetAlignedRectVertical(Rect parent, Rect child, VAlignment alignment);
 
 bool Rect_IsPointInside(Rect rect, Vector2 point);
 

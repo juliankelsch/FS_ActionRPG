@@ -31,6 +31,9 @@ Vector4 Matrix4_Multiply_V4(Matrix4 m, Vector4 p);
 Vector3 Matrix4_Multiply_Point3(Matrix4 m, Vector3 p);
 Vector3 Matrix4_Multiply_Direction3(Matrix4 m, Vector3 d);
 
+void Matrix4_Basis(Matrix4 m, Vector3 x, Vector3 y, Vector3 z);
+void Matrix4_BasisP(Matrix4 m, Vector3 x, Vector3 y, Vector3 z, Vector3 position);
+
 void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target);
 void Matrix4_Orthographic(Matrix4 m, float l, float r, float t, float b, float n, float f);
 void Matrix4_Frustum(Matrix4 m, float l, float r, float t, float b, float n, float f);
