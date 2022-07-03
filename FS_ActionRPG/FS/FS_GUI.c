@@ -89,6 +89,21 @@ void GUI_EditEnum(GUI *gui, const char *label, const char **names, uint32_t *val
 void GUI_EditFlags(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
 
+Rect GUI_BoxModel_FillRect(GUI_BoxModel *model, Rect rect)
+{
+	Rect contentArea = rect;
+
+	contentArea = Rect_GetInsetRect(contentArea, model->margin);
+	contentArea = Rect_GetInsetRect(contentArea, model->outline);
+	contentArea = Rect_GetInsetRect(contentArea, model->border);
+	contentArea = Rect_GetInsetRect(contentArea, model->padding);
+	contentArea.x = Mathf_Clamp(contentArea.x, rect.x, rect.x + rect.width);
+	contentArea.y = Mathf_Clamp(contentArea.y, rect.y, rect.y + rect.height);
+	contentArea.width = Mathf_Clamp(contentArea.width, 0.0f, rect.width);
+	contentArea.height = Mathf_Clamp(contentArea.height, 0.0f, rect.height);
+	return contentArea;
+}
+
 /*
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -207,7 +222,7 @@ float TrueTypeFont_GetTextHeight(TrueTypeFont *font, const char *text, float lin
 // 
 // EndTextBlock();
 
-Vector2 RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text)
+Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text)
 {
 	TrueTypeFont *font = family->fonts + ((style->bold) + (style->italic * 2));
 
@@ -235,7 +250,7 @@ Vector2 RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Vect
 	switch (style->alignment.vertical)
 	{
 	case VAlignment_Top: pos.y += font->centerY; break;
-	case VAlignment_Center: pos.y = (bot - top) / 2.0f - textHeight / 2.0f + font->centerY; break;
+	case VAlignment_Center: pos.y = (bot + top) / 2.0f - textHeight / 2.0f + font->centerY; break;
 	case VAlignment_Bot: pos.y = bot - textHeight + font->centerY; break;
 	}
 
@@ -292,8 +307,77 @@ Vector2 RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Vect
 	return pos;
 }
 
+void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text)
+{
+	RenderList2D_DrawText_Cursor(renderList, family, (Vector2) { bounds.x, bounds.y }, bounds, style, text);
+}
+
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color)
 {
 	RenderList2D_PushQuad(renderList, (Vector2) {rect.x, rect.y}, (Vector2) {rect.width, rect.height}, color, 0);
 }
 
+void RenderList2D_DrawRectOutline(RenderList2D *renderList, Rect inner, Rect outer, Color color)
+{
+	RectCorners innerCorners, outerCornes;
+	Rect_GetCorners(inner, innerCorners);
+	Rect_GetCorners(outer, outerCornes);
+
+	Vertex2D vertices[] =
+	{
+		// top
+		{outerCornes[Corner_TopLeft], {0.0f, 1.0f}, color},
+		{outerCornes[Corner_TopRight], {1.0f, 1.0f}, color},
+		{innerCorners[Corner_TopLeft], {0.0f, 0.0f}, color},
+		{innerCorners[Corner_TopRight], {1.0f, 0.0f}, color},
+
+		// right
+		{outerCornes[Corner_TopRight], {0.0f, 1.0f}, color},
+		{outerCornes[Corner_BotRight], {1.0f, 1.0f}, color},
+		{innerCorners[Corner_TopRight], {0.0f, 0.0f}, color},
+		{innerCorners[Corner_BotRight], {1.0f, 0.0f}, color},
+
+		// bot
+		{outerCornes[Corner_BotRight], {0.0f, 1.0f}, color},
+		{outerCornes[Corner_BotLeft], {1.0f, 1.0f}, color},
+		{innerCorners[Corner_BotRight], {0.0f, 0.0f}, color},
+		{innerCorners[Corner_BotLeft], {1.0f, 0.0f}, color},
+
+		// left
+		{outerCornes[Corner_BotLeft], {0.0f, 1.0f}, color},
+		{outerCornes[Corner_TopLeft], {1.0f, 1.0f}, color},
+		{innerCorners[Corner_BotLeft], {0.0f, 0.0f}, color},
+		{innerCorners[Corner_TopLeft], {1.0f, 0.0f}, color}
+	};
+
+	uint32_t indices[] =
+	{ 
+		2, 1, 0,
+		1, 2, 3,
+
+		6, 5, 4,
+		5, 6, 7,
+
+		10, 9, 8,
+		9, 10, 11,
+
+		14, 13, 12,
+		13, 14, 15
+	};
+
+	RenderList2D_PushMesh(renderList, ArrayCount(vertices), vertices, ArrayCount(indices), indices, 0);
+}
+
+void RenderList2D_DrawBoxModel(RenderList2D *renderList, Rect contentRect, GUI_BoxModel *model, GUI_BoxModelColors *boxColors)
+{
+	RenderList2D_DrawRect(renderList, contentRect, boxColors->content);
+	Rect paddingRect = Rect_GetOffsetRect(contentRect, model->padding);
+	Rect borderRect = Rect_GetOffsetRect(paddingRect, model->border);
+	Rect outlineRect = Rect_GetOffsetRect(borderRect, model->outline);
+	Rect marginRect = Rect_GetOffsetRect(outlineRect, model->margin);
+
+	RenderList2D_DrawRectOutline(renderList, contentRect, paddingRect, boxColors->padding);
+	RenderList2D_DrawRectOutline(renderList, paddingRect, borderRect, boxColors->border);
+	RenderList2D_DrawRectOutline(renderList, borderRect, outlineRect, boxColors->outline);
+	RenderList2D_DrawRectOutline(renderList, outlineRect, marginRect, boxColors->margin);
+}

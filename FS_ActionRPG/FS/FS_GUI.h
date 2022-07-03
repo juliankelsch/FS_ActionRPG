@@ -54,6 +54,7 @@ typedef enum
 	OverflowMode_Wrap
 } OverflowMode;
 
+
 typedef enum
 {
 	ColorMode_Normal,
@@ -67,16 +68,24 @@ typedef enum
 	TextCase_Upper
 } TextCase;
 
-typedef enum
+typedef struct
 {
-	Corner_TopLeft,
-	Corner_TopRight,
-	Corner_BotLeft,
-	Corner_BotRight,
+	RectOffsets margin;
+	RectOffsets outline;
+	RectOffsets border;
+	RectOffsets padding;
+} GUI_BoxModel;
 
-	Corner_Count
-} Corner;
+typedef struct
+{
+	Color margin;
+	Color outline;
+	Color border;
+	Color padding;
+	Color content;
+} GUI_BoxModelColors;
 
+Rect GUI_BoxModel_FillRect(GUI_BoxModel *model, Rect rect);
 
 typedef struct
 {
@@ -111,7 +120,10 @@ void GUI_EditFlags(GUI *gui, const char *label, const char **names, uint32_t *va
 void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
 
 void RenderList2D_DrawImage(RenderList2D *renderList, Rect bounds, Vector2 imageSize, bool maintainAspect, Color tint, uint32_t textureID);
-Vector2 RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text);
+Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text);
+void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text);
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color);
+void RenderList2D_DrawRectOutline(RenderList2D *renderList, Rect inner, Rect outer, Color color);
+void RenderList2D_DrawBoxModel(RenderList2D *renderList, Rect contentRect, GUI_BoxModel *model, GUI_BoxModelColors *boxColors);
 
 #endif // __FS_GUI_H__

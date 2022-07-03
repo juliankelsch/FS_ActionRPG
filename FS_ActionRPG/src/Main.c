@@ -181,7 +181,7 @@ void RenderUI(Game *game)
 	game->textStyle.lineSpacing = 1.0f;
 	game->textStyle.characterSpacing = 1.0f;
 	game->textStyle.textCase = TextCase_Normal;
-	RenderList2D_DrawText(&game->renderList, &game->fontFamily, pos, textBounds, &game->textStyle, "This is some centered poem\nThis is some centered poem\nThis is some centered poem\nThis is some centered poem\nThis is some centered poem\n");
+	RenderList2D_DrawText(&game->renderList, &game->fontFamily, textBounds, &game->textStyle, "This is some centered poem");
 
 	game->textStyle.colorMode = ColorMode_Gradient;
 	game->textStyle.gradientColors[Corner_TopLeft] = Color_Green;
@@ -194,7 +194,55 @@ void RenderUI(Game *game)
 	game->textStyle.italic = true;
 	game->textStyle.textCase = TextCase_Upper;
 	game->textStyle.characterSpacing = 1.4f;
-	RenderList2D_DrawText(&game->renderList, &game->fontFamily, pos, textBounds, &game->textStyle, "Editor");
+	RenderList2D_DrawText(&game->renderList, &game->fontFamily, textBounds, &game->textStyle, "Editor");
+
+	{
+		Rect parent = { 500, 100, 500, 300 };
+		RenderList2D_DrawRect(list, parent, Color_Hex(0x00000033));
+
+
+		GUI_BoxModel model = { 0 };
+		model.margin = (RectOffsets){100, 100, 100, 100};
+		model.outline = (RectOffsets){0, 0, 0, 0};
+		model.border = (RectOffsets){2, 2, 2, 2};
+		model.padding = (RectOffsets){5, 5, 5, 5};
+
+		Rect contentRect = GUI_BoxModel_FillRect(&model, parent);
+
+		GUI_BoxModelColors boxColors = { 0 };
+		boxColors.margin = Color_Clear;
+		boxColors.outline = Color_Red;
+		boxColors.border = Color_White;
+		boxColors.padding = Color_RGB(0.1f, 0.2f, 0.4f);
+		boxColors.content = Color_RGB(0.1f, 0.2f, 0.4f);
+
+		if (Rect_IsPointInside(contentRect, game->mouse->position))
+		{
+			boxColors.border = Color_Green;
+			if (WasPressedThisFrame(game->mouse->leftButton) || WasHeldThisFrame(game->mouse->leftButton))
+			{
+				boxColors.border = Color_Red;
+			}
+		}
+
+		RenderList2D_DrawBoxModel(list, contentRect, &model, &boxColors);
+
+		// appearance
+		game->textStyle.colorMode = ColorMode_Gradient;
+		game->textStyle.gradientColors[Corner_TopLeft] = Color_RGB(1.0f, 0.2f, 0.0f);
+		game->textStyle.gradientColors[Corner_TopRight] = Color_RGB(1.0f, 0.2f, 0.0f);
+		game->textStyle.gradientColors[Corner_BotLeft] = Color_Yellow;
+		game->textStyle.gradientColors[Corner_BotRight] = Color_Yellow;
+		game->textStyle.bold = true;
+		game->textStyle.italic = true;
+		game->textStyle.textCase = TextCase_Upper;
+		game->textStyle.characterSpacing = 1.3f;
+
+		// layout
+		game->textStyle.alignment.vertical = VAlignment_Center;
+		game->textStyle.alignment.horizontal = HAlignment_Center;
+		RenderList2D_DrawText(&game->renderList, &game->fontFamily, contentRect, &game->textStyle, "Hot Wheels");
+	}
 
 	//DrawVector3(&game->font, 0, 20, "Player position", game->player.position);
 	OpenGL_DrawList(&game->renderList, SCREEN_WIDTH, SCREEN_HEIGHT);
