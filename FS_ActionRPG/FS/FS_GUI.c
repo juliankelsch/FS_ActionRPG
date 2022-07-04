@@ -312,6 +312,80 @@ void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bo
 	RenderList2D_DrawText_Cursor(renderList, family, (Vector2) { bounds.x, bounds.y }, bounds, style, text);
 }
 
+void RenderList2D_DrawTextBuffer(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text, uint32_t textLength)
+{
+	TrueTypeFont *font = family->fonts + ((style->bold) + (style->italic * 2));
+
+	Vector2 pos = bounds.pos;
+	
+	Color topLeft, topRight, botLeft, botRight;
+	if (style->colorMode == ColorMode_Normal)
+	{
+		topLeft = style->color;
+		topRight = style->color;
+		botLeft = style->color;
+		botRight = style->color;
+	}
+	else
+	{
+		topLeft = style->gradientColors[Corner_TopLeft];
+		topRight = style->gradientColors[Corner_TopRight];
+		botLeft = style->gradientColors[Corner_BotLeft];
+		botRight = style->gradientColors[Corner_BotRight];
+	}
+
+	float baselineOffset = font->pixelHeight * style->lineSpacing;
+	float top = bounds.y;
+	float bot = bounds.y + bounds.height;
+	float textHeight = TrueTypeFont_GetTextHeight(font, text, style->lineSpacing);
+
+	switch (style->alignment.vertical)
+	{
+	case VAlignment_Top: pos.y += font->centerY; break;
+	case VAlignment_Center: pos.y = (bot + top) / 2.0f - textHeight / 2.0f + font->centerY; break;
+	case VAlignment_Bot: pos.y = bot - textHeight + font->centerY; break;
+	}
+
+	float left = bounds.x;
+	float right = bounds.x + bounds.width;
+	float lineWidth = TrueTypeFont_GetLineWidth(font, text, style->characterSpacing, style->textCase);
+
+	pos.x = GetNewLineX(style->alignment.horizontal, left, right, lineWidth);
+
+	CharacterQuad quad = { 0 };
+	uint32_t i = 0;
+	while (text[i] && i < textLength)
+	{
+		char character = ConvertCase(text[i], style->textCase);
+
+		if (character == '\n')
+		{
+			lineWidth = TrueTypeFont_GetLineWidth(font, text + i + 1, style->characterSpacing, style->textCase);
+			pos.x = GetNewLineX(style->alignment.horizontal, left, right, lineWidth);
+			pos.y += baselineOffset;
+		}
+		else if (TrueTypeFont_HasChar(font, character))
+		{
+			TrueTypeFont_GetQuad(font, &pos.x, &pos.y, character, style->characterSpacing, &quad);
+			Vertex2D vertices[] =
+			{
+				{{quad.x0, font->pixelHeight + quad.y0}, {quad.s0, quad.t0}, topLeft},
+				{{quad.x1, font->pixelHeight + quad.y0}, {quad.s1, quad.t0}, topRight},
+				{{quad.x0, font->pixelHeight + quad.y1}, {quad.s0, quad.t1}, botLeft},
+				{{quad.x1, font->pixelHeight + quad.y1}, {quad.s1, quad.t1}, botRight},
+			};
+
+			uint32_t indices[] =
+			{
+				2, 1, 0,
+				1, 2, 3
+			};
+			RenderList2D_PushMesh(renderList, ArrayCount(vertices), vertices, ArrayCount(indices), indices, font->textureID);
+		}
+		i++;
+	}
+}
+
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color)
 {
 	RenderList2D_PushQuad(renderList, (Vector2) {rect.x, rect.y}, (Vector2) {rect.width, rect.height}, color, 0);

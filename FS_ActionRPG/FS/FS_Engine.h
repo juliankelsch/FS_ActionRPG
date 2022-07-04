@@ -22,6 +22,7 @@
 #include "FS_String.h"
 #include "FS_RenderList2D.h"
 #include "FS_GUI.h"
+#include "FS_TextEdit.h"
 
 #include "FS_Camera.h"
 

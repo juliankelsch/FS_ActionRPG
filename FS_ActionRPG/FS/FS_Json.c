@@ -47,19 +47,19 @@ typedef struct
 	char* at;
 } JsonLexer;
 
-bool Char_IsDigit(char c)
+bool IsDigit(char c)
 {
 	return c >= '0' && c <= '9';
 }
 
-bool Char_IsWhitespace(char c)
+bool IsWhitespace(char c)
 {
 	return c == '\n' || c == '\r' || c == ' ' || c == '\t';
 }
 
 bool NumberContainsDot(char *string)
 {
-	while (Char_IsDigit(*string++))
+	while (IsDigit(*string++))
 	{
 		if (*string == '.')
 		{
@@ -111,7 +111,7 @@ void JsonLexer_AddBooleanToken(JsonLexer *lexer, bool value)
 
 void JsonLexer_SkipWhitespace(JsonLexer *lexer)
 {
-	while (Char_IsWhitespace(*lexer->at))
+	while (IsWhitespace(*lexer->at))
 	{
 		lexer->at++;
 	}
@@ -156,7 +156,7 @@ JsonToken *Json_Tokenize(Arena *arena, const char *string)
 	{
 		JsonLexer_SkipWhitespace(lexer);
 
-		if (Char_IsDigit(*lexer->at))
+		if (IsDigit(*lexer->at))
 		{
 			JsonLexer_ParseNumber(lexer);
 		}
@@ -438,6 +438,6 @@ JsonValue *Json_Parse(Arena *arena, const char *string)
 {
 	JsonToken *tokens = Json_Tokenize(arena, string);
 	JsonValue *result = Json_ParseTokens(arena, tokens);
-	PrintJson(result);
+	//PrintJson(result);
 	return result;
 }

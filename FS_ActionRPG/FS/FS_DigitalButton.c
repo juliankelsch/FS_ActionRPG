@@ -10,6 +10,11 @@ bool WasReleasedThisFrame(DigitalButton button)
 	return (!button.isDown + button.transitionCount) > 1;
 }
 
+bool WasRepeatedThisFrame(DigitalButton button)
+{
+	return button.isRepeat;
+}
+
 bool WasHeldThisFrame(DigitalButton button)
 {
 	return button.isDown && button.transitionCount == 0;

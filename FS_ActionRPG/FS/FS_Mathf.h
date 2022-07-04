@@ -2,6 +2,7 @@
 #define __FS_MATHF_H__
 
 #include <float.h>
+#include <stdint.h>
 
 typedef enum
 {
@@ -40,6 +41,10 @@ float Mathf_Degrees(float radians);
 float Mathf_Abs(float x);
 float Mathf_Min(float a, float b);
 float Mathf_Max(float a, float b);
+
+int32_t Math_Min(int32_t a, int32_t b);
+int32_t Math_Max(int32_t a, int32_t b);
+int32_t Math_Clamp(int32_t x, int32_t low, int32_t high);
 
 float Mathf_Random01();
 

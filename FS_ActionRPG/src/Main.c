@@ -130,6 +130,8 @@ typedef struct
 	TextStyle textStyle;
 	RenderList2D renderList;
 
+	TextInput textInput;
+
 	Player player;
 } Game;
 
@@ -137,6 +139,7 @@ const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 900;
 
 static Game game = { 0 };
+
 
 void Game_Initialize(Game *game)
 {
@@ -215,12 +218,34 @@ void Game_Initialize(Game *game)
 
 	}
 
+	static char buffer[256] = { 0 };
+	TextInput_Create(&game->textInput, buffer, ArrayCount(buffer), 0);
+
 	game->isInitialized = true;
 }
 
 void DrawVector3(TrueTypeFont *font, float x, float y, const char *name, Vector3 vector)
 {
 	OpenGL_DrawText(font, 0, 100, "%s [%.2f, %.2f, %.2f]", name , vector.x, vector.y, vector.z);
+}
+
+void UpdateTextInput(Keyboard *keyboard, TextInput *textInput)
+{
+	for (uint32_t i = 0; i < keyboard->inputCharCount; i++)
+	{
+		TextInput_OnChar(textInput, keyboard->inputChars[i]);
+	}
+
+	DigitalButton backspace = keyboard->keys[Key_Backspace];
+	if (WasPressedThisFrame(backspace) || WasRepeatedThisFrame(backspace))
+	{
+		TextInput_OnBackspace(textInput);
+	}
+
+	if (WasPressedThisFrame(keyboard->keys[Key_F1]))
+	{
+		TextInput_Clear(textInput);
+	}
 }
 
 
@@ -261,7 +286,9 @@ void RenderUI(Game *game)
 	game->textStyle.lineSpacing = 1.0f;
 	game->textStyle.characterSpacing = 1.0f;
 	game->textStyle.textCase = TextCase_Normal;
-	RenderList2D_DrawText(&game->renderList, &game->fontFamily, textBounds, &game->textStyle, "This is some centered poem");
+
+	String string = TextInput_GetString(&game->textInput);
+	RenderList2D_DrawTextBuffer(&game->renderList, &game->fontFamily, textBounds, &game->textStyle, string.chars, string.length);
 
 	game->textStyle.colorMode = ColorMode_Gradient;
 	game->textStyle.gradientColors[Corner_TopLeft] = Color_Green;
@@ -432,6 +459,7 @@ void Game_Simulate(Game *game)
 		Particle *particle = pool->particles + i;
 		Particle_Simulate(particle, timeInfo->deltaTime);
 	}
+	UpdateTextInput(keyboard, &game->textInput);
 }
 
 void RenderParticles(Game *game)

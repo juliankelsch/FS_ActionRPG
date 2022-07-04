@@ -102,6 +102,7 @@ void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
 void RenderList2D_DrawImage(RenderList2D *renderList, Rect bounds, Vector2 imageSize, bool maintainAspect, Color tint, uint32_t textureID);
 Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text);
 void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text);
+void RenderList2D_DrawTextBuffer(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text, uint32_t textLength);
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color);
 void RenderList2D_DrawRectOutline(RenderList2D *renderList, Rect inner, Rect outer, Color color);
 void RenderList2D_DrawBoxModel(RenderList2D *renderList, Rect contentRect, GUI_BoxModel *model, GUI_BoxModelColors *boxColors);

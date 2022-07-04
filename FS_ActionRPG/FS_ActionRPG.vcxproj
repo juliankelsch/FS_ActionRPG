@@ -157,6 +157,7 @@
     <ClCompile Include="FS\FS_Assets.c" />
     <ClCompile Include="FS\FS_Camera.c" />
     <ClCompile Include="FS\FS_Color.c" />
+    <ClCompile Include="FS\FS_CommandLine.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
     <ClCompile Include="FS\FS_Font.c" />
     <ClCompile Include="FS\FS_GUI.c" />
@@ -171,6 +172,7 @@
     <ClCompile Include="FS\FS_Rectangle.c" />
     <ClCompile Include="FS\FS_RenderList2D.c" />
     <ClCompile Include="FS\FS_String.c" />
+    <ClCompile Include="FS\FS_TextEdit.c" />
     <ClCompile Include="FS\FS_Texture2D.c" />
     <ClCompile Include="FS\FS_Transform.c" />
     <ClCompile Include="FS\FS_Vector2.c" />
@@ -191,6 +193,7 @@
     <ClInclude Include="FS\FS_Buffer.h" />
     <ClInclude Include="FS\FS_Camera.h" />
     <ClInclude Include="FS\FS_Color.h" />
+    <ClInclude Include="FS\FS_CommandLine.h" />
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
     <ClInclude Include="FS\FS_Font.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="FS\FS_RenderList2D.h" />
     <ClInclude Include="FS\FS_stb_truetype.h" />
     <ClInclude Include="FS\FS_String.h" />
+    <ClInclude Include="FS\FS_TextEdit.h" />
     <ClInclude Include="FS\FS_Texture2D.h" />
     <ClInclude Include="FS\FS_Transform.h" />
     <ClInclude Include="FS\FS_Vector2.h" />

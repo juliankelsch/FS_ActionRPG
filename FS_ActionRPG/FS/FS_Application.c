@@ -47,6 +47,8 @@ Key GLFW_LookUpKey(int glfwKey)
 	case GLFW_KEY_D: return Key_D;
 	case GLFW_KEY_ESCAPE: return Key_Escape;
 	case GLFW_KEY_SPACE: return Key_Space;
+	case GLFW_KEY_ENTER: return Key_Return;
+	case GLFW_KEY_BACKSPACE: return Key_Backspace;
 
 	case GLFW_KEY_0: return Key_0;
 	case GLFW_KEY_1: return Key_1;
@@ -92,6 +94,10 @@ void GLFW_MouseButtonCallback(GLFWwindow *window, int button, int action, int mo
 		mouseButton->isDown = false;
 		mouseButton->transitionCount++;
 	}
+	else if (action == GLFW_REPEAT)
+	{
+		mouseButton->isRepeat = true;
+	}
 }
 
 void GLFW_KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mods)
@@ -111,6 +117,10 @@ void GLFW_KeyCallback(GLFWwindow *window, int key, int scancode, int action, int
 		keyButton->isDown = false;
 		keyButton->transitionCount++;
 	}
+	else if (action == GLFW_REPEAT)
+	{
+		keyButton->isRepeat = true;
+	}
 }
 
 void ClearInput(Application *app)
@@ -119,14 +129,18 @@ void ClearInput(Application *app)
 	Keyboard *keyboard = &app->keyboard;
 	mouse->scroll = 0.0f;
 
+	keyboard->inputCharCount = 0;
+
 	for (size_t i = 0; i < MouseButton_Count; i++)
 	{
 		mouse->buttons[i].transitionCount = 0;
+		mouse->buttons[i].isRepeat = false;
 	}
 
 	for (size_t i = 0; i < Key_Count; i++)
 	{
 		keyboard->keys[i].transitionCount = 0;
+		keyboard->keys[i].isRepeat = false;
 	}
 }
 
@@ -163,6 +177,17 @@ void PostProcessEvents(Application *app)
 	}
 }
 
+void GLFW_CharCallback(GLFWwindow *window, unsigned int codepoint)
+{
+	Application *app = (Application*)glfwGetWindowUserPointer(window);
+	Keyboard *keyboard = &app->keyboard;
+
+	if (keyboard->inputCharCount < KEYBOARD_CHAR_QUEUE_LENGTH && codepoint < 128)
+	{
+		keyboard->inputChars[keyboard->inputCharCount++] = (char)codepoint;
+	}
+}
+
 void Application_Run(ApplicationSettings *settings)
 {
 	glfwSetErrorCallback(GLFW_ErrorCallback);
@@ -187,6 +212,7 @@ void Application_Run(ApplicationSettings *settings)
 	glfwSetWindowUserPointer(window, &_app);
 	glfwSetMouseButtonCallback(window, GLFW_MouseButtonCallback);
 	glfwSetKeyCallback(window, GLFW_KeyCallback);
+	glfwSetCharCallback(window, GLFW_CharCallback);
 
 	TimeInfo *timeInfo = &_app.timeInfo;
 	Mouse *mouse = &_app.mouse;

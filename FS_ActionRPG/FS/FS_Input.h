@@ -8,12 +8,14 @@
 typedef struct
 {
 	bool isDown;				// Whether the button ended down.
+	bool isRepeat;
 	uint8_t transitionCount;	// How often the button transitioned from up to down between frames.
 	float downFor;
 } DigitalButton;
 
 bool WasPressedThisFrame(DigitalButton button);
 bool WasReleasedThisFrame(DigitalButton button);
+bool WasRepeatedThisFrame(DigitalButton button);
 bool WasHeldThisFrame(DigitalButton button);
 bool WasHeldFor(DigitalButton button, float holdTime);
 
@@ -63,6 +65,7 @@ typedef enum
 	Key_Space,
 	Key_Escape,
 	Key_Return,
+	Key_Backspace,
 
 	Key_0,
 	Key_1,
@@ -93,8 +96,12 @@ typedef enum
 	Key_Count
 } Key;
 
+#define KEYBOARD_CHAR_QUEUE_LENGTH 128
 typedef struct
 {
+	char inputChars[KEYBOARD_CHAR_QUEUE_LENGTH];
+	uint32_t inputCharCount;
+
 	union
 	{
 		DigitalButton keys[Key_Count];

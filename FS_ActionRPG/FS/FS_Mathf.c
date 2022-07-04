@@ -68,6 +68,21 @@ float Mathf_Max(float a, float b)
 	return fmaxf(a, b);
 }
 
+int32_t Math_Min(int32_t a, int32_t b)
+{
+	return min(a, b);
+}
+
+int32_t Math_Max(int32_t a, int32_t b)
+{
+	return max(a, b);
+}
+
+int32_t Math_Clamp(int32_t x, int32_t low, int32_t high)
+{
+	return x < low ? low : (x > high ? high : x);
+}
+
 float Mathf_Random01(float x)
 {
 	return (float)rand() / RAND_MAX;
