@@ -22,6 +22,7 @@ Vector2 Vector2_Add(Vector2 a, Vector2 b);
 Vector2 Vector2_Subtract(Vector2 a, Vector2 b);
 Vector2 Vector2_Multiply(Vector2 a, Vector2 b);
 float Vector2_Dot(Vector2 a, Vector2 b);
+float Vector2_Cross(Vector2 a, Vector2 b);
 float Vector2_Length(Vector2 v);
 float Vector2_Distance(Vector2 a, Vector2 b);
 Vector2 Vector2_Direction(Vector2 from, Vector2 to);
