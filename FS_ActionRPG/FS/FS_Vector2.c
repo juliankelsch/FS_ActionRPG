@@ -41,6 +41,11 @@ float Vector2_Dot(Vector2 a, Vector2 b)
 	return a.x * b.x + a.y * b.y;
 }
 
+float Vector2_Cross(Vector2 a, Vector2 b)
+{
+	return a.x * b.y - a.y * b.x;
+}
+
 float Vector2_Length(Vector2 v)
 {
 	return Mathf_Sqrt(Vector2_Dot(v, v));

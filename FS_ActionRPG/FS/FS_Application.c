@@ -41,14 +41,32 @@ Key GLFW_LookUpKey(int glfwKey)
 {
 	switch (glfwKey)
 	{
-	case GLFW_KEY_W: return Key_W;
 	case GLFW_KEY_A: return Key_A;
-	case GLFW_KEY_S: return Key_S;
+	case GLFW_KEY_B: return Key_B;
+	case GLFW_KEY_C: return Key_C;
 	case GLFW_KEY_D: return Key_D;
-	case GLFW_KEY_ESCAPE: return Key_Escape;
-	case GLFW_KEY_SPACE: return Key_Space;
-	case GLFW_KEY_ENTER: return Key_Return;
-	case GLFW_KEY_BACKSPACE: return Key_Backspace;
+	case GLFW_KEY_E: return Key_E;
+	case GLFW_KEY_F: return Key_F;
+	case GLFW_KEY_G: return Key_G;
+	case GLFW_KEY_H: return Key_H;
+	case GLFW_KEY_I: return Key_I;
+	case GLFW_KEY_J: return Key_I;
+	case GLFW_KEY_K: return Key_K;
+	case GLFW_KEY_L: return Key_L;
+	case GLFW_KEY_M: return Key_M;
+	case GLFW_KEY_N: return Key_N;
+	case GLFW_KEY_O: return Key_O;
+	case GLFW_KEY_P: return Key_P;
+	case GLFW_KEY_Q: return Key_Q;
+	case GLFW_KEY_R: return Key_R;
+	case GLFW_KEY_S: return Key_S;
+	case GLFW_KEY_T: return Key_T;
+	case GLFW_KEY_U: return Key_U;
+	case GLFW_KEY_V: return Key_V;
+	case GLFW_KEY_W: return Key_W;
+	case GLFW_KEY_X: return Key_X;
+	case GLFW_KEY_Y: return Key_Y;
+	case GLFW_KEY_Z: return Key_Z;
 
 	case GLFW_KEY_0: return Key_0;
 	case GLFW_KEY_1: return Key_1;
@@ -73,6 +91,66 @@ Key GLFW_LookUpKey(int glfwKey)
 	case GLFW_KEY_F10: return Key_F10;
 	case GLFW_KEY_F11: return Key_F11;
 	case GLFW_KEY_F12: return Key_F12;
+
+	case GLFW_KEY_LEFT_SHIFT: return Key_LeftShift;
+	case GLFW_KEY_RIGHT_SHIFT: return Key_RightShift;
+
+	case GLFW_KEY_LEFT_CONTROL: return Key_LeftCtrl;
+	case GLFW_KEY_RIGHT_CONTROL: return Key_RightCtrl;
+
+	case GLFW_KEY_LEFT_ALT: return Key_LeftAlt;
+	case GLFW_KEY_RIGHT_ALT: return Key_RightAlt;
+
+	case GLFW_KEY_ESCAPE: return Key_Escape;
+	case GLFW_KEY_SPACE: return Key_Space;
+	case GLFW_KEY_ENTER: return Key_Enter;
+	case GLFW_KEY_BACKSPACE: return Key_Backspace;
+	case GLFW_KEY_TAB: return Key_Tab;
+	case GLFW_KEY_CAPS_LOCK: return Key_Caps;
+
+	//case GLFW_KEY_BACKSLASH: return Key_LeftBackslash;
+	case GLFW_KEY_GRAVE_ACCENT: return Key_Backtick;
+
+	case GLFW_KEY_COMMA: return Key_Comma;
+	case GLFW_KEY_PERIOD: return Key_Dot;
+	case GLFW_KEY_SLASH: return Key_Slash;
+	case GLFW_KEY_BACKSLASH: return Key_RightBackslash;
+	case GLFW_KEY_APOSTROPHE: return Key_Apostrophe;
+	case GLFW_KEY_EQUAL: return Key_Equals;
+	case GLFW_KEY_MINUS: return Key_Minus;
+	case GLFW_KEY_SEMICOLON: return Key_Semicolon;
+	case GLFW_KEY_LEFT_BRACKET: return Key_OpenBracket;
+	case GLFW_KEY_RIGHT_BRACKET: return Key_CloseBracket;
+
+	case GLFW_KEY_INSERT: return Key_Insert;
+	case GLFW_KEY_DELETE: return Key_Delete;
+	case GLFW_KEY_PAGE_UP: return Key_PageUp;
+	case GLFW_KEY_PAGE_DOWN: return Key_PageDown;
+	case GLFW_KEY_HOME: return Key_Home;
+	case GLFW_KEY_END: return Key_End;
+
+	case GLFW_KEY_PRINT_SCREEN: return Key_Print;
+	case GLFW_KEY_SCROLL_LOCK: return Key_ScrollLock;
+	case GLFW_KEY_PAUSE: return Key_Pause;
+
+	case GLFW_KEY_KP_0: return Key_K0;
+	case GLFW_KEY_KP_1: return Key_K1;
+	case GLFW_KEY_KP_2: return Key_K2;
+	case GLFW_KEY_KP_3: return Key_K3;
+	case GLFW_KEY_KP_4: return Key_K4;
+	case GLFW_KEY_KP_5: return Key_K5;
+	case GLFW_KEY_KP_6: return Key_K6;
+	case GLFW_KEY_KP_7: return Key_K7;
+	case GLFW_KEY_KP_8: return Key_K8;
+	case GLFW_KEY_KP_9: return Key_K9;
+	case GLFW_KEY_KP_ENTER: return Key_KEnter;
+	case GLFW_KEY_KP_ADD: return Key_KAdd;
+	case GLFW_KEY_KP_SUBTRACT: return Key_KSubtract;
+	case GLFW_KEY_KP_MULTIPLY: return Key_KMultiply;
+	case GLFW_KEY_KP_DIVIDE: return Key_KDivide;
+	case GLFW_KEY_NUM_LOCK: return Key_KNumLock;
+	//case : return Key_KComma; // TODO? What is the real key for this?
+	case GLFW_KEY_MENU: return Key_Menu;
 	}
 	return Key_Unknown;
 }

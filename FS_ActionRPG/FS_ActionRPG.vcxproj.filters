@@ -96,6 +96,9 @@
     <ClCompile Include="FS\FS_CommandLine.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FS\FS_C_Parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="libs\glfw3.dll" />
@@ -206,6 +209,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FS\FS_CommandLine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FS\FS_C_Parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

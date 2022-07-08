@@ -68,6 +68,11 @@ float Mathf_Max(float a, float b)
 	return fmaxf(a, b);
 }
 
+bool Mathf_IsInRange(float value, float low, float high)
+{
+	return value >= low && value <= high;
+}
+
 int32_t Math_Min(int32_t a, int32_t b)
 {
 	return min(a, b);

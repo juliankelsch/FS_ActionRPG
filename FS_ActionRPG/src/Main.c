@@ -248,7 +248,6 @@ void UpdateTextInput(Keyboard *keyboard, TextInput *textInput)
 	}
 }
 
-
 void RenderUI(Game *game)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -386,10 +385,10 @@ void Game_Simulate(Game *game)
 	game->camera.position = (Vector3){0.0f, 15.0f, 10.0f};
 
 	Vector2 movementInput = { 0.0f, 0.0f };
-	if (keyboard->keyW.isDown) movementInput.y -= 1.0f;
-	if (keyboard->keyS.isDown) movementInput.y += 1.0f;
-	if (keyboard->keyA.isDown) movementInput.x -= 1.0f;
-	if (keyboard->keyD.isDown) movementInput.x += 1.0f;
+	if (keyboard->w.isDown) movementInput.y -= 1.0f;
+	if (keyboard->s.isDown) movementInput.y += 1.0f;
+	if (keyboard->a.isDown) movementInput.x -= 1.0f;
+	if (keyboard->d.isDown) movementInput.x += 1.0f;
 	movementInput = Vector2_NormalizedSafe(movementInput);
 
 	player->moveDir = (Vector3){movementInput.x, 0.0f, movementInput.y};

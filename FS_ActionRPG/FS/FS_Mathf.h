@@ -3,6 +3,7 @@
 
 #include <float.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef enum
 {
@@ -41,6 +42,9 @@ float Mathf_Degrees(float radians);
 float Mathf_Abs(float x);
 float Mathf_Min(float a, float b);
 float Mathf_Max(float a, float b);
+
+// inclusive for low AND high
+bool Mathf_IsInRange(float value, float low, float high);
 
 int32_t Math_Min(int32_t a, int32_t b);
 int32_t Math_Max(int32_t a, int32_t b);

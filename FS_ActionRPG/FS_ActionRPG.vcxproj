@@ -158,6 +158,7 @@
     <ClCompile Include="FS\FS_Camera.c" />
     <ClCompile Include="FS\FS_Color.c" />
     <ClCompile Include="FS\FS_CommandLine.c" />
+    <ClCompile Include="FS\FS_C_Parser.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
     <ClCompile Include="FS\FS_Font.c" />
     <ClCompile Include="FS\FS_GUI.c" />
@@ -194,6 +195,7 @@
     <ClInclude Include="FS\FS_Camera.h" />
     <ClInclude Include="FS\FS_Color.h" />
     <ClInclude Include="FS\FS_CommandLine.h" />
+    <ClInclude Include="FS\FS_C_Parser.h" />
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
     <ClInclude Include="FS\FS_Font.h" />
