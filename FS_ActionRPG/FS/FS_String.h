@@ -12,9 +12,23 @@ typedef struct
 	uint32_t length;
 } String;
 
+bool String_Matches(String string, const char *b);
+bool String_Equals(const char *a, const char *b);
+const char *String_SkipWhitespace(const char *at);
+
 #define CopyArray(dest, src, count, Type) Copy(dest, src, (count) *sizeof(Type))
 void Copy(const void *dest, const void *src, uint32_t size);
 void Move(const void *dest, const void *src, uint32_t size);
+int Compare(const void *a, const void *b, uint32_t size);
+
+bool Char_IsDigit(Char c);
+bool Char_IsAlpha(Char c);
+bool Char_IsIdentifier(Char c); // a-z | A-Z | 0-9 | _
+bool Char_IsUpper(Char c);
+bool Char_IsLower(Char c);
+bool Char_IsWhitespace(Char c);
+Char Char_ToUpper(Char c);
+Char Char_ToLower(Char c);
 
 typedef struct
 {

@@ -16,6 +16,7 @@
 #include "FS_Mathf.h"
 #include "FS_Macros.h"
 #include "FS_Mesh.h"
+#include "FS_Meta.h"
 #include "FS_Texture2D.h"
 #include "FS_Assets.h"
 #include "FS_Json.h"
@@ -23,6 +24,8 @@
 #include "FS_RenderList2D.h"
 #include "FS_GUI.h"
 #include "FS_TextEdit.h"
+#include "FS_C_Parser.h"
+#include "FS_DataStructures.h"
 
 #include "FS_Camera.h"
 

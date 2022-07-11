@@ -7,6 +7,7 @@
 #include "FS_Mesh.h"
 #include "FS_Buffer.h"
 
+char* Assets_LoadFileAsString(const char *filepath);
 bool Assets_LoadFile(Buffer *buffer, const char *filepath);
 bool Assets_LoadFont(TrueTypeFont *font, float height, const char*filepath);
 bool Assets_LoadFontFamily(FontFamily *family, float height,

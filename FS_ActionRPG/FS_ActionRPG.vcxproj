@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -159,7 +159,9 @@
     <ClCompile Include="FS\FS_Color.c" />
     <ClCompile Include="FS\FS_CommandLine.c" />
     <ClCompile Include="FS\FS_C_Parser.c" />
+    <ClCompile Include="FS\FS_DataStructures.c" />
     <ClCompile Include="FS\FS_DigitalButton.c" />
+    <ClCompile Include="FS\FS_Filesystem.c" />
     <ClCompile Include="FS\FS_Font.c" />
     <ClCompile Include="FS\FS_GUI.c" />
     <ClCompile Include="FS\FS_Json.c" />
@@ -196,16 +198,20 @@
     <ClInclude Include="FS\FS_Color.h" />
     <ClInclude Include="FS\FS_CommandLine.h" />
     <ClInclude Include="FS\FS_C_Parser.h" />
+    <ClInclude Include="FS\FS_DataStructures.h" />
     <ClInclude Include="FS\FS_Debug.h" />
     <ClInclude Include="FS\FS_Engine.h" />
+    <ClInclude Include="FS\FS_Filesystem.h" />
     <ClInclude Include="FS\FS_Font.h" />
     <ClInclude Include="FS\FS_GUI.h" />
     <ClInclude Include="FS\FS_Input.h" />
+    <ClInclude Include="FS\FS_Geometry.h" />
     <ClInclude Include="FS\FS_Json.h" />
     <ClInclude Include="FS\FS_Macros.h" />
     <ClInclude Include="FS\FS_Mathf.h" />
     <ClInclude Include="FS\FS_Matrix4.h" />
     <ClInclude Include="FS\FS_Mesh.h" />
+    <ClInclude Include="FS\FS_Meta.h" />
     <ClInclude Include="FS\FS_OpenGL.h" />
     <ClInclude Include="FS\FS_Print.h" />
     <ClInclude Include="FS\FS_Quaternion.h" />

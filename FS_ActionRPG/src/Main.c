@@ -566,14 +566,120 @@ bool Game_Update(void *userData, Application *app)
 
 	RenderParticles(game);
 
-
 	RenderUI(game);
 	RenderList2D_Clear(&game->renderList);
 	return true;
 }
 
-int main()
+
+static void Meta_PrintAllTokens(const char *filepath)
 {
+	char *source = Assets_LoadFileAsString(filepath);
+	Tokenizer tok = Tokenizer_Create(source);
+	for(;;)
+	{
+		Token token = Tokenizer_GetNextToken(&tok);
+		Token_PrintToken(token);
+
+		if (token.type == TokenType_EndOfStream)
+		{
+			break;
+		}
+	}
+
+}
+
+static void Meta_GenerateEnumNames(const char *filepath)
+{
+	char *source = Assets_LoadFileAsString(filepath);
+	Tokenizer tok = Tokenizer_Create(source);
+	for(;;)
+	{
+		Token token = Tokenizer_GetNextToken(&tok);
+		if (token.type == TokenType_EndOfStream)
+		{
+			break;
+		}
+
+		if (Token_Matches(token, TokenType_Identifier, "typedef"))
+		{
+			if (Tokenizer_AssumeToken(&tok, TokenType_Identifier, "enum"))
+			{
+				Token enumName = Tokenizer_GetNextToken(&tok);
+				if (enumName.type == TokenType_Identifier)
+				{
+					if (Tokenizer_AssumeTokenType(&tok, TokenType_OpenBrace))
+					{
+						printf("const char *%.*s_GetName(%.*s value)\n", 
+							enumName.text.length, enumName.text.chars,
+							enumName.text.length, enumName.text.chars
+						);
+						printf("{\n");
+						printf("\tswitch(value)\n");
+						printf("\t{\n");
+						for(;;)
+						{
+							token = Tokenizer_GetNextToken(&tok);
+							if (token.type == TokenType_Identifier)
+							{
+								printf("\t\tcase %.*s: return \"%.*s\";\n",
+									token.text.length, token.text.chars,
+									token.text.length, token.text.chars
+								);
+							}
+							else if (token.type == TokenType_CloseBrace)
+							{
+								break;
+							}
+						}
+						printf("\t}\n");
+						printf("}\n");
+					}
+				}
+				else
+				{
+					// cannot generate names for anonymous enum
+				}
+			}
+		}
+	}
+}
+
+void Action_PrintInteger(void *params, void *userData)
+{
+	int num = *(int *)params;
+	printf("%d\n", num);
+}
+
+int32_t CompareIntegers(void *a, void *b, void *userData)
+{
+	return *(int *)a - *(int *)b;
+}
+
+int main(int argc, char **argv)
+{
+	//Meta_GenerateEnumNames("FS/FS_C_Parser.h");
+
+	List nums;
+	List_Init(&nums, sizeof(int));
+	for (int i = 0; i < 10; i++)
+	{
+		int num = 10 - i;
+		List_Append(&nums, &num, sizeof(num));
+	}
+	List_Sort(&nums, CompareIntegers, NULL);
+	int n = 12;
+	List_InsertAt(&nums, 0, &n, sizeof(n));
+	List_RemoveAt(&nums, 10);
+
+	List_ForEach(&nums, Action_PrintInteger, NULL);
+
+	int test = 55;
+	if (List_Contains(&nums, &test, sizeof(test)))
+	{
+		printf("Contains %d!", test);
+	}
+
 
 	ApplicationSettings settings = { 0 };
 
@@ -586,5 +692,5 @@ int main()
 	// Setup update loop
 	settings.Update = Game_Update;
 
-	Application_Run(&settings);
+	//Application_Run(&settings);
 }

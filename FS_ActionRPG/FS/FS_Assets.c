@@ -48,6 +48,37 @@ void Assets_FreeTexture2D(Texture2D *texture)
 	texture->pixels = NULL;
 }
 
+char *Assets_LoadFileAsString(const char *filepath)
+{
+	FILE *file = fopen(filepath, "rb");
+	if (!file)
+	{
+		Debug_Warn("Could not open file %s!", filepath);
+		return false;
+	}
+
+	fseek(file, 0, SEEK_END);
+	uint32_t size = ftell(file);
+	fseek(file, 0, SEEK_SET);
+
+	char *result = (uint8_t*)malloc(size + 1);
+	if (!result)
+	{
+		Debug_Warn("Could not allocate char* when loading file %s", filepath);
+		return NULL;
+	}
+
+	if (fread(result, size, 1, file) != 1)
+	{
+		Debug_Warn("Could not read file %s!", filepath);
+		return NULL;
+	}
+
+	result[size] = 0;
+
+	return result;
+}
+
 bool Assets_LoadFile(Buffer *buffer, const char *filepath)
 {
 	FILE *file = fopen(filepath, "rb");

@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define ALIGNMENT_OF(Type) offsetof(struct {Type t; char x; }, x)
+#define ALIGN_OF(Type) offsetof(struct {Type t; char x; }, x)
 
 typedef struct
 {
