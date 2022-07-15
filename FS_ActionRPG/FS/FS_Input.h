@@ -38,8 +38,8 @@ typedef enum
 
 typedef struct
 {
-	Vector2 position;
-	Vector2 motion;
+	vec2 position;
+	vec2 motion;
 
 	float scroll;
 

@@ -1,6 +1,7 @@
 #ifndef __FS_MATHF_H__
 #define __FS_MATHF_H__
 
+#include <math.h>
 #include <float.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -11,6 +12,7 @@ typedef enum
 	Ease_QuadIn,
 	Ease_QuadOut,
 } Ease;
+
 
 typedef enum
 {

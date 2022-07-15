@@ -191,6 +191,7 @@
     <Library Include="libs\glfw3_mt.lib" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FS\dolphin.h" />
     <ClInclude Include="FS\FS_Application.h" />
     <ClInclude Include="FS\FS_Assets.h" />
     <ClInclude Include="FS\FS_Buffer.h" />

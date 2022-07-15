@@ -6,9 +6,9 @@
 
 typedef struct
 {
-	Vector3 position;
+	vec3 position;
 	Quaternion rotation;
-	Vector3 localScale;
+	vec3 localScale;
 } Transform;
 
 

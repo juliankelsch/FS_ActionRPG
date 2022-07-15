@@ -44,7 +44,7 @@ typedef union
 	};
 	struct
 	{
-		Vector2 pos, size;
+		vec2 pos, size;
 	};
 } Rect;
 
@@ -56,11 +56,11 @@ typedef union
 	};
 	struct
 	{
-		Vector2Int pos, size;
+		vec2i pos, size;
 	};
 } RectInt;
 
-typedef Vector2 RectCorners[Corner_Count];
+typedef vec2 RectCorners[Corner_Count];
 
 typedef struct
 {
@@ -69,8 +69,8 @@ typedef struct
 
 typedef struct
 {
-	Vector2 min;
-	Vector2 max;
+	vec2 min;
+	vec2 max;
 } RectAnchors;
 
 Rect Rect_GetOffsetRect(Rect rect, RectOffsets offsets);
@@ -83,11 +83,11 @@ Rect Rect_GetAlignedRect(Rect parent, Rect child, Alignment alignment);
 Rect Rect_GetAlignedRectHorizontal(Rect parent, Rect child, HAlignment alignment);
 Rect Rect_GetAlignedRectVertical(Rect parent, Rect child, VAlignment alignment);
 
-bool Rect_IsPointInside(Rect rect, Vector2 point);
+bool Rect_IsPointInside(Rect rect, vec2 point);
 
 Rect Rect_SplitVertical(Rect parent, Rect *top, Rect *bot, float percent);
 Rect Rect_SplitHorizontal(Rect parent, Rect *left, Rect *right, float percent);
-Vector2 Rect_GetCorner(Rect rect, Corner corner);
+vec2 Rect_GetCorner(Rect rect, Corner corner);
 void Rect_GetCorners(Rect rect, RectCorners out);
 
 #endif // __FS_RECTANGLE_H__

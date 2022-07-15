@@ -7,7 +7,7 @@
 #include "FS_Mathf.h"
 
 // geometry
-bool Geometry_EdgesIntersect(Vector2 startA, Vector2 endA, Vector2 startB, Vector2 endB)
+bool Geometry_EdgesIntersect(vec2 startA, vec2 endA, vec2 startB, vec2 endB)
 {
 	float t0, t1;
 	return Geometry_LinesIntersect(startA, endA, startB, endB, &t0, &t1)
@@ -15,7 +15,7 @@ bool Geometry_EdgesIntersect(Vector2 startA, Vector2 endA, Vector2 startB, Vecto
 		&& Mathf_IsInRange(t1, 0.0f, 1.0f);
 }
 
-bool Geometry_LinesIntersect(Vector2 startA, Vector2 endA, Vector2 startB, Vector2 endB, float *t0, float *t1)
+bool Geometry_LinesIntersect(vec2 startA, vec2 endA, vec2 startB, vec2 endB, float *t0, float *t1)
 {
 	// if denom == 0
 	//		lines are parallel 
@@ -33,17 +33,17 @@ bool Geometry_LinesIntersect(Vector2 startA, Vector2 endA, Vector2 startB, Vecto
 	return false;
 }
 
-bool Geometry_IsPointInsidePolygon(Vector2 point, Vector2 *vertices, uint32_t vertexCount)
+bool Geometry_IsPointInsidePolygon(vec2 point, vec2 *vertices, uint32_t vertexCount)
 {
-	Vector2 direction = { 0.623423f, 0.523132f };
-	Vector2 p1 = Vector2_Add(point, direction);
+	vec2 direction = { 0.623423f, 0.523132f };
+	vec2 p1 = Vector2_Add(point, direction);
 	uint32_t intersections = 0;
 	float t0 = Mathf_NegativeInfinity;
 	float t1 = Mathf_NegativeInfinity;
 	for (size_t i = 0; i < vertexCount; i++)
 	{
-		Vector2 e0 = vertices[i];
-		Vector2 e1 = vertices[(i + 1) % vertexCount];
+		vec2 e0 = vertices[i];
+		vec2 e1 = vertices[(i + 1) % vertexCount];
 		bool edgeIntersects = Geometry_LinesIntersect(point, p1, e0, e1, &t0, &t1)
 			&& t0 >= 0.0f
 			&& Mathf_IsInRange(t1, 0.0f, 1.0f);

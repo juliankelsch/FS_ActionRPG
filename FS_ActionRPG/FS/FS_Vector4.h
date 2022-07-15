@@ -4,6 +4,6 @@
 typedef struct
 {
 	float x, y, z, w;
-} Vector4;
+} vec4;
 
 #endif // __FS_VECTOR4_H__

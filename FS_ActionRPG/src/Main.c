@@ -19,9 +19,9 @@
 
 typedef struct
 {
-	Vector3 position;
-	Vector3 velocity;
-	Vector3 acceleration;
+	vec3 position;
+	vec3 velocity;
+	vec3 acceleration;
 	
 	float startTime;
 
@@ -55,11 +55,11 @@ typedef struct
 
 void Particle_Simulate(Particle *particle, float deltaTime)
 {
-	particle->velocity = Vector3_Add(particle->velocity, Vector3_Multiply_F(particle->acceleration, deltaTime));
-	particle->position = Vector3_Add(particle->position, Vector3_Multiply_F(particle->velocity, deltaTime));
+	particle->velocity = vec3_add(particle->velocity, vec3_mulfiply_f(particle->acceleration, deltaTime));
+	particle->position = vec3_add(particle->position, vec3_mulfiply_f(particle->velocity, deltaTime));
 
-	particle->acceleration = Vector3_Zero;
-	particle->velocity = Vector3_Multiply_F(particle->velocity, 0.99f);
+	particle->acceleration = vec3_zero;
+	particle->velocity = vec3_mulfiply_f(particle->velocity, 0.99f);
 }
 
  void ParticleSystem_CreateTestSystem(ParticleSystem *particleSystem, uint32_t texture)
@@ -82,10 +82,10 @@ void ParticleSystem_Play(ParticleSystem *particleSystem, float time)
 
 typedef struct
 {
-	Vector3 position;
+	vec3 position;
 
 	float moveSpeed;
-	Vector3 moveDir;
+	vec3 moveDir;
 
 	float height;
 	float radius;
@@ -101,7 +101,7 @@ typedef struct
 	Keyboard *keyboard;
 	Mouse *mouse;
 	TimeInfo *timeInfo;
-	Vector2Int screen;
+	vec2i screen;
 
 	Texture2D texture;
 	GLuint textureID;
@@ -150,7 +150,7 @@ void Game_Initialize(Game *game)
 	game->quad = Mesh_CreateQuad(game->arena);
 	game->cube = Mesh_CreateCube(game->arena);
 	game->sphere = Mesh_CreateSphere(game->arena, 16, 32);
-	game->plane = Mesh_CreatePlane(game->arena, (Vector3){1, 0, 0}, (Vector3){0, 0, 1}, 10.0f, 5);
+	game->plane = Mesh_CreatePlane(game->arena, (vec3){1, 0, 0}, (vec3){0, 0, 1}, 10.0f, 5);
 	game->circle = Mesh_CreateCircle(game->arena, 0.5f, 32);
 	game->cone = Mesh_CreateCone(game->arena, 1.0f, 0.5f, 32);
 	game->cylinder = Mesh_CreateCylinder(game->arena, 1.0f, 0.5f, 32);
@@ -190,13 +190,13 @@ void Game_Initialize(Game *game)
 
 	Player *player = &game->player;
 
-	player->position = Vector3_Zero;
+	player->position = vec3_zero;
 	player->height = 1.8f;
 	player->radius = 0.25f;
 	player->moveSpeed = 8.0f;
 
 	game->playerMesh = Mesh_CreateCylinder(game->arena, player->height, player->radius, 16);
-	game->groundMesh = Mesh_CreatePlane(game->arena, Vector3_X, Vector3_Z, 100.0f, 9);
+	game->groundMesh = Mesh_CreatePlane(game->arena, vec3_x, vec3_z, 100.0f, 9);
 	for (int i = 0; i < game->groundMesh.vertexCount; i++)
 	{
 		game->groundMesh.vertices[i].position.y = (Mathf_Random01() - 0.5f) * 10;
@@ -212,9 +212,9 @@ void Game_Initialize(Game *game)
 	for (size_t i = 0; i < pool->particleCount; i++)
 	{
 		Particle *particle = pool->particles + i;
-		particle->position = Vector3_Zero;
-		particle->velocity = (Vector3){ 0, 20, 0 };
-		particle->acceleration = Vector3_Zero;
+		particle->position = vec3_zero;
+		particle->velocity = (vec3){ 0, 20, 0 };
+		particle->acceleration = vec3_zero;
 
 	}
 
@@ -224,7 +224,7 @@ void Game_Initialize(Game *game)
 	game->isInitialized = true;
 }
 
-void DrawVector3(TrueTypeFont *font, float x, float y, const char *name, Vector3 vector)
+void DrawVector3(TrueTypeFont *font, float x, float y, const char *name, vec3 vector)
 {
 	OpenGL_DrawText(font, 0, 100, "%s [%.2f, %.2f, %.2f]", name , vector.x, vector.y, vector.z);
 }
@@ -274,7 +274,7 @@ void RenderUI(Game *game)
 
 	//RenderList2D_SetBounds(list, textBounds);
 
-	Vector2 pos = {textBounds.x, textBounds.y};
+	vec2 pos = {textBounds.x, textBounds.y};
 	game->textStyle.colorMode = ColorMode_Normal;
 	game->textStyle.overflow = OverflowMode_Ignore;
 	game->textStyle.alignment.vertical = VAlignment_Center;
@@ -382,18 +382,18 @@ void Game_Simulate(Game *game)
 	Mouse *mouse = game->mouse;
 	TimeInfo *timeInfo = game->timeInfo;
 
-	game->camera.position = (Vector3){0.0f, 15.0f, 10.0f};
+	game->camera.position = (vec3){0.0f, 15.0f, 10.0f};
 
-	Vector2 movementInput = { 0.0f, 0.0f };
+	vec2 movementInput = { 0.0f, 0.0f };
 	if (keyboard->w.isDown) movementInput.y -= 1.0f;
 	if (keyboard->s.isDown) movementInput.y += 1.0f;
 	if (keyboard->a.isDown) movementInput.x -= 1.0f;
 	if (keyboard->d.isDown) movementInput.x += 1.0f;
-	movementInput = Vector2_NormalizedSafe(movementInput);
+	movementInput = vec2_normalized_safe(movementInput);
 
-	player->moveDir = (Vector3){movementInput.x, 0.0f, movementInput.y};
-	Vector3 velocity = Vector3_Multiply_F(player->moveDir, player->moveSpeed * timeInfo->deltaTime);
-	player->position = Vector3_Add(player->position, velocity);
+	player->moveDir = (vec3){movementInput.x, 0.0f, movementInput.y};
+	vec3 velocity = vec3_mulfiply_f(player->moveDir, player->moveSpeed * timeInfo->deltaTime);
+	player->position = vec3_add(player->position, velocity);
 
 	float halfBounds = 50.0f;
 	if (player->position.x + player->radius > halfBounds)
@@ -416,7 +416,7 @@ void Game_Simulate(Game *game)
 
 	RayHitInfo groundHit = { 0 };
 
-	if (Ray3_GetClosestMeshIntersection(Vector3_Add(player->position, Vector3_Up), Vector3_Down, &game->groundMesh, &groundHit))
+	if (Ray3_GetClosestMeshIntersection(vec3_add(player->position, vec3_up), vec3_down, &game->groundMesh, &groundHit))
 	{
 		game->hit = true;
 		game->hitInfo = groundHit;
@@ -437,10 +437,10 @@ void Game_Simulate(Game *game)
 		for (size_t i = 0; i < pool->particleCount; i++)
 		{
 			Particle *particle = pool->particles + i;
-			particle->position = Vector3_Zero;
-			Vector3 direction = Vector3_Normalized((Vector3) { Mathf_Random01() * 2.0f - 1.0f, 1, Mathf_Random01() * 2.0f - 1.0f });
-			particle->velocity = Vector3_Multiply_F(direction, Mathf_Random01() * 15.0f);
-			particle->acceleration = Vector3_Zero;
+			particle->position = vec3_zero;
+			vec3 direction = vec3_normalized((vec3) { Mathf_Random01() * 2.0f - 1.0f, 1, Mathf_Random01() * 2.0f - 1.0f });
+			particle->velocity = vec3_mulfiply_f(direction, Mathf_Random01() * 15.0f);
+			particle->acceleration = vec3_zero;
 		}
 	}
 	else
@@ -448,8 +448,8 @@ void Game_Simulate(Game *game)
 		for (size_t i = 0; i < pool->particleCount; i++)
 		{
 			Particle *particle = pool->particles + i;
-			Vector3 gravity = {0, -10, 0};
-			particle->acceleration = Vector3_Add(particle->acceleration, gravity);
+			vec3 gravity = {0, -10, 0};
+			particle->acceleration = vec3_add(particle->acceleration, gravity);
 		}
 	}
 
@@ -469,15 +469,15 @@ void RenderParticles(Game *game)
 	Camera *camera = &game->camera;
 	float scale = 1.2f;
 
-	Vector3 camX = Camera_X(camera);
-	Vector3 camY = Camera_Y(camera);
-	Vector3 camZ = Camera_Z(camera);
+	vec3 camX = Camera_X(camera);
+	vec3 camY = Camera_Y(camera);
+	vec3 camZ = Camera_Z(camera);
 
 	Matrix4 particleOrientation, particleOrientationT;
 
-	Vector3 particleX = Vector3_Multiply_F(camX, -1.0f);
-	Vector3 particleY = camY;
-	Vector3 particleZ = Vector3_Multiply_F(camZ, -1.0f);
+	vec3 particleX = vec3_mulfiply_f(camX, -1.0f);
+	vec3 particleY = camY;
+	vec3 particleZ = vec3_mulfiply_f(camZ, -1.0f);
 
 	Matrix4_Basis(particleOrientation, particleX, particleY, particleZ);
 	Matrix4_Transpose(particleOrientationT, particleOrientation);
@@ -515,7 +515,7 @@ bool Game_Update(void *userData, Application *app)
 	Mouse *mouse = Application_GetMouse(app);
 	Keyboard *kb = Application_GetKeyboard(app);
 	TimeInfo *timeInfo = Application_GetTimeInfo(app);
-	Vector2Int screen = Application_GetScreenSize(app);
+	vec2i screen = Application_GetScreenSize(app);
 
 
 	game->screen = screen;

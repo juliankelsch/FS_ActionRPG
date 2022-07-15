@@ -13,7 +13,7 @@ Rect Rect_GetOffsetRect(Rect rect, RectOffsets offsets)
 	return result;
 }
 
-bool Rect_IsPointInside(Rect rect, Vector2 point)
+bool Rect_IsPointInside(Rect rect, vec2 point)
 {
 	return point.x >= rect.x
 		&& point.x <= rect.x + rect.width
@@ -178,9 +178,9 @@ Rect Rect_GetAlignedRectVertical(Rect parent, Rect child, VAlignment alignment)
 	return result;
 }
 
-Vector2 Rect_GetCorner(Rect rect, Corner corner)
+vec2 Rect_GetCorner(Rect rect, Corner corner)
 {
-	Vector2 result = { rect.x, rect.y };
+	vec2 result = { rect.x, rect.y };
 	switch (corner)
 	{
 		case Corner_TopRight:

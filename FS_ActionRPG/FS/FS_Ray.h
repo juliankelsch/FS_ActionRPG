@@ -7,17 +7,17 @@
 
 typedef struct
 {
-	Vector3 origin;
-	Vector3 direction;
+	vec3 origin;
+	vec3 direction;
 } Ray3;
 
 typedef struct
 {
-	Vector3 point;
+	vec3 point;
 	float distance;
 } RayHitInfo;
 
-bool Ray3_IntersectsTriangle(Vector3 origin, Vector3 direction, Vector3 v0, Vector3 v1, Vector3 v2, RayHitInfo *info);
-bool Ray3_GetClosestMeshIntersection(Vector3 origin, Vector3 direction, Mesh *mesh, RayHitInfo *info);
+bool Ray3_IntersectsTriangle(vec3 origin, vec3 direction, vec3 v0, vec3 v1, vec3 v2, RayHitInfo *info);
+bool Ray3_GetClosestMeshIntersection(vec3 origin, vec3 direction, Mesh *mesh, RayHitInfo *info);
 
 #endif // __FS_RAY_H__

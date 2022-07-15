@@ -232,5 +232,8 @@
     <ClInclude Include="FS\FS_DataStructures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FS\dolphin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

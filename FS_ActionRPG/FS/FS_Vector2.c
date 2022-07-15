@@ -3,67 +3,67 @@
 #include "FS_Mathf.h"
 #include "FS_Debug.h"
 
-Vector2 Vector2_Create(float x, float y)
+vec2 vec2_create(float x, float y)
 {
-	Vector2 result = { x, y };
+	vec2 result = { x, y };
 	return result;
 }
 
-Vector2 Vector2_Add(Vector2 a, Vector2 b)
+vec2 vec2_add(vec2 a, vec2 b)
 {
-	Vector2 result = {
+	vec2 result = {
 		a.x + b.x,
 		a.y + b.y
 	};
 	return result;
 }
 
-Vector2 Vector2_Subtract(Vector2 a, Vector2 b)
+vec2 vec2_subtract(vec2 a, vec2 b)
 {
-	Vector2 result = {
+	vec2 result = {
 		a.x - b.x,
 		a.y - b.y
 	};
 	return result;
 }
 
-Vector2 Vector2_Multiply(Vector2 a, Vector2 b)
+vec2 vec2_multiply(vec2 a, vec2 b)
 {
-	Vector2 result = {
+	vec2 result = {
 		a.x * b.x,
 		a.y * b.y
 	};
 	return result;
 }
 
-float Vector2_Dot(Vector2 a, Vector2 b)
+float vec2_dot(vec2 a, vec2 b)
 {
 	return a.x * b.x + a.y * b.y;
 }
 
-float Vector2_Cross(Vector2 a, Vector2 b)
+float vec2_cross(vec2 a, vec2 b)
 {
 	return a.x * b.y - a.y * b.x;
 }
 
-float Vector2_Length(Vector2 v)
+float vec2_length(vec2 v)
 {
-	return Mathf_Sqrt(Vector2_Dot(v, v));
+	return sqrtf(vec2_dot(v, v));
 }
 
-float Vector2_Distance(Vector2 a, Vector2 b)
+float vec2_distance(vec2 a, vec2 b)
 {
-	return Vector2_Length(Vector2_Subtract(a, b));
+	return vec2_length(vec2_subtract(a, b));
 }
 
-Vector2 Vector2_Direction(Vector2 from, Vector2 to)
+vec2 vec2_direction(vec2 from, vec2 to)
 {
-	return Vector2_NormalizedSafe(Vector2_Subtract(to, from));
+	return vec2_normalized_safe(vec2_subtract(to, from));
 }
 
-Vector2 Vector2_Multiply_F(Vector2 v, float s)
+vec2 vec2_multiply_f(vec2 v, float s)
 {
-	Vector2 result = {
+	vec2 result = {
 		v.x * s,
 		v.y * s
 	};
@@ -71,23 +71,23 @@ Vector2 Vector2_Multiply_F(Vector2 v, float s)
 
 }
 
-Vector2 Vector2_Normalized(Vector2 v)
+vec2 vec2_normalized(vec2 v)
 {
-	return Vector2_Multiply_F(v, 1.0f / Vector2_Length(v));
+	return vec2_multiply_f(v, 1.0f / vec2_length(v));
 }
 
-Vector2 Vector2_NormalizedSafe(Vector2 v)
+vec2 vec2_normalized_safe(vec2 v)
 {
-	float mag = Vector2_Length(v);
+	float mag = vec2_length(v);
 	if (mag != 0.0f)
 	{
-		return Vector2_Multiply_F(v, 1.0f / mag);
+		return vec2_multiply_f(v, 1.0f / mag);
 	}
 
 	return v;
 }
 
-Vector2 Vector2_GetNormal(Vector2 v)
+vec2 vec2_nomal(vec2 v)
 {
-	return Vector2_Normalized((Vector2){ -v.y, v.x });
+	return vec2_normalized((vec2){ -v.y, v.x });
 }

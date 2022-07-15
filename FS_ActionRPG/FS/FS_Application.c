@@ -10,7 +10,7 @@ struct Application
 	TimeInfo timeInfo;
 	Mouse mouse;
 	Keyboard keyboard;
-	Vector2Int screen;
+	vec2i screen;
 };
 
 static Application _app = { 0 };
@@ -313,9 +313,9 @@ void Application_Run(ApplicationSettings *settings)
 		// since the callback doesn't fire on mouse positions outside of the window content area.
 		double mouseX, mouseY;
 		glfwGetCursorPos(window, &mouseX, &mouseY);
-		Vector2 oldMouse = mouse->position;
-		mouse->position = Vector2_Create((float)mouseX, (float)mouseY);
-		mouse->motion = Vector2_Subtract(mouse->position, oldMouse);
+		vec2 oldMouse = mouse->position;
+		mouse->position = vec2_create((float)mouseX, (float)mouseY);
+		mouse->motion = vec2_subtract(mouse->position, oldMouse);
 
 		glfwGetFramebufferSize(window, &_app.screen.x, &_app.screen.y);
 		PostProcessEvents(&_app);
@@ -328,7 +328,7 @@ void Application_Run(ApplicationSettings *settings)
 	}
 }
 
-Vector2Int Application_GetScreenSize(Application *app)
+vec2i Application_GetScreenSize(Application *app)
 {
 	return app->screen;
 }

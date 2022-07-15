@@ -39,7 +39,7 @@ void RenderList2D_PushMesh(RenderList2D *renderList, uint32_t vertexCount, Verte
 void RenderList2D_Clear(RenderList2D *renderList);
 void RenderList2D_SetBounds(RenderList2D *renderList, Rect bounds);
 
-void RenderList2D_PushQuad(RenderList2D *renderList, Vector2 pos, Vector2 size, Color color, uint32_t texture);
+void RenderList2D_PushQuad(RenderList2D *renderList, vec2 pos, vec2 size, Color color, uint32_t texture);
 
 void RenderList2D_AddDrawCall(RenderList2D *renderList, DrawCall2D drawCall);
 void RenderList2D_AddVertices(RenderList2D *renderList, uint32_t vertexCount, Vertex2D *vertices);

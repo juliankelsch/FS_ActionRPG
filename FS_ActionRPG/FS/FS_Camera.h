@@ -7,8 +7,8 @@
 
 typedef struct
 {
-	Vector3 position;
-	Vector3 target;
+	vec3 position;
+	vec3 target;
 
 	RectInt viewport;
 	float fovy;
@@ -18,8 +18,8 @@ typedef struct
 void Camera_CreateDefault(Camera *camera, uint32_t viewportWidth, uint32_t viewportHeight);
 void Camera_GetProjectionMatrix(Camera *camera, Matrix4 out);
 void Camera_GetViewMatrix(Camera *camera, Matrix4 out);
-Vector3 Camera_Y(Camera *camera);
-Vector3 Camera_X(Camera *camera);
-Vector3 Camera_Z(Camera *camera);
+vec3 Camera_Y(Camera *camera);
+vec3 Camera_X(Camera *camera);
+vec3 Camera_Z(Camera *camera);
 
 #endif // __FS_CAMERA_H__

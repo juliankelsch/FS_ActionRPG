@@ -231,9 +231,9 @@ void Matrix4_Multiply_F(Matrix4 res, Matrix4 m, float s)
 	Matrix4_Copy(res, temp);
 }
 
-Vector4 Matrix4_Multiply_V4(Matrix4 m, Vector4 v)
+vec4 Matrix4_Multiply_V4(Matrix4 m, vec4 v)
 {
-    Vector4 res;
+    vec4 res;
     for (size_t i = 0; i < 4; i++)
     {
         (&res.x)[i] =
@@ -245,21 +245,21 @@ Vector4 Matrix4_Multiply_V4(Matrix4 m, Vector4 v)
     return res;
 }
 
-Vector3 Matrix4_Multiply_Point3(Matrix4 m, Vector3 p)
+vec3 Matrix4_Multiply_Point3(Matrix4 m, vec3 p)
 {
-    Vector4 point = { p.x, p.y, p.z, 1.0f };
-    Vector4 transformed = Matrix4_Multiply_V4(m, point);
-    return Vector3_From_V4(transformed);
+    vec4 point = { p.x, p.y, p.z, 1.0f };
+    vec4 transformed = Matrix4_Multiply_V4(m, point);
+    return vec3_from_vec4(transformed);
 }
 
-Vector3 Matrix4_Multiply_Direction3(Matrix4 m, Vector3 d)
+vec3 Matrix4_Multiply_Direction3(Matrix4 m, vec3 d)
 {
-    Vector4 dir = { d.x, d.y, d.z, 0.0f };
-    Vector4 transformed = Matrix4_Multiply_V4(m, dir);
-    return Vector3_From_V4(transformed);
+    vec4 dir = { d.x, d.y, d.z, 0.0f };
+    vec4 transformed = Matrix4_Multiply_V4(m, dir);
+    return vec3_from_vec4(transformed);
 }
 
-void Matrix4_Translation(Matrix4 m, Vector3 t)
+void Matrix4_Translation(Matrix4 m, vec3 t)
 {
     Matrix4_Create(m,
         1, 0, 0, t.x,
@@ -269,7 +269,7 @@ void Matrix4_Translation(Matrix4 m, Vector3 t)
     );
 }
 
-void Matrix4_Scale(Matrix4 m, Vector3 s)
+void Matrix4_Scale(Matrix4 m, vec3 s)
 {
     Matrix4_Create(m,
         s.x, 0, 0, 0,
@@ -279,7 +279,7 @@ void Matrix4_Scale(Matrix4 m, Vector3 s)
     );
 }
 
-void Matrix4_Basis(Matrix4 m, Vector3 x, Vector3 y, Vector3 z)
+void Matrix4_Basis(Matrix4 m, vec3 x, vec3 y, vec3 z)
 {
     Matrix4_Create(m,
         x.x, y.x, z.x, 0,
@@ -289,7 +289,7 @@ void Matrix4_Basis(Matrix4 m, Vector3 x, Vector3 y, Vector3 z)
     );
 }
 
-void Matrix4_BasisP(Matrix4 m, Vector3 x, Vector3 y, Vector3 z, Vector3 position)
+void Matrix4_BasisP(Matrix4 m, vec3 x, vec3 y, vec3 z, vec3 position)
 {
     Matrix4_Basis(m, x, y, z);
     m[0][3] = position.x;
@@ -297,18 +297,18 @@ void Matrix4_BasisP(Matrix4 m, Vector3 x, Vector3 y, Vector3 z, Vector3 position
     m[2][3] = position.z;
 }
 
-void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target)
+void Matrix4_LookAt(Matrix4 m, vec3 eye, vec3 target)
 {
-	Vector3 z = Vector3_Direction(eye, target);
-	Vector3 x = Vector3_Normalized(Vector3_Cross(z, (Vector3){0, 1, 0}));
-	Vector3 y = Vector3_Normalized(Vector3_Cross(x, z));
+	vec3 z = vec3_direction(eye, target);
+	vec3 x = vec3_normalized(vec3_cross(z, (vec3){0, 1, 0}));
+	vec3 y = vec3_normalized(vec3_cross(x, z));
 
-	z = Vector3_Multiply_F(z, -1.0f);
+	z = vec3_mulfiply_f(z, -1.0f);
 
 	Matrix4_Create(m,
-		x.x, x.y, x.z, -Vector3_Dot(eye, x),
-		y.x, y.y, y.z, -Vector3_Dot(eye, y),
-		z.x, z.y, z.z, -Vector3_Dot(eye, z),
+		x.x, x.y, x.z, -vec3_dot(eye, x),
+		y.x, y.y, y.z, -vec3_dot(eye, y),
+		z.x, z.y, z.z, -vec3_dot(eye, z),
 		0, 0, 0, 1
 	);
 }

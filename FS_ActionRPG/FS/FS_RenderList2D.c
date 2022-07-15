@@ -62,7 +62,7 @@ void RenderList2D_AddIndices(RenderList2D *renderList, uint32_t indexCount, uint
 	renderList->drawCalls[renderList->drawCallCount - 1].count += copyCount;
 }
 
-void RenderList2D_PushQuad(RenderList2D *renderList, Vector2 pos, Vector2 size, Color color, uint32_t texture)
+void RenderList2D_PushQuad(RenderList2D *renderList, vec2 pos, vec2 size, Color color, uint32_t texture)
 {
 	Vertex2D vertices[] =
 	{

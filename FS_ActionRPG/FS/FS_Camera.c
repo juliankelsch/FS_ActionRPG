@@ -2,8 +2,8 @@
 
 void Camera_CreateDefault(Camera *camera, uint32_t viewportWidth, uint32_t viewportHeight)
 {
-	camera->position = (Vector3){0, 4, 5};
-	camera->target = (Vector3){0, 0, 0};
+	camera->position = (vec3){0, 4, 5};
+	camera->target = (vec3){0, 0, 0};
 	camera->viewport = (RectInt){ 0, 0, viewportWidth, viewportHeight };
 	camera->fovy = Mathf_Radians(70.0f);
 	camera->near = 0.1f;
@@ -20,21 +20,21 @@ void Camera_GetViewMatrix(Camera *camera, Matrix4 out)
 	Matrix4_LookAt(out, camera->position, camera->target);
 }
 
-Vector3 Camera_Y(Camera *camera)
+vec3 Camera_Y(Camera *camera)
 {
-	Vector3 z = Camera_Z(camera);;
-	Vector3 x = Vector3_NormalizedSafe(Vector3_Cross(z, Vector3_Y));
-	return Vector3_NormalizedSafe(Vector3_Cross(x, z));
+	vec3 z = Camera_Z(camera);;
+	vec3 x = vec3_normalized_safe(vec3_cross(z, vec3_y));
+	return vec3_normalized_safe(vec3_cross(x, z));
 }
 
-Vector3 Camera_X(Camera *camera)
+vec3 Camera_X(Camera *camera)
 {
 
-	Vector3 z = Camera_Z(camera);;
-	return Vector3_NormalizedSafe(Vector3_Cross(z, Vector3_Y));
+	vec3 z = Camera_Z(camera);;
+	return vec3_normalized_safe(vec3_cross(z, vec3_y));
 }
 
-Vector3 Camera_Z(Camera *camera)
+vec3 Camera_Z(Camera *camera)
 {
-	return Vector3_Direction(camera->target, camera->position);
+	return vec3_direction(camera->target, camera->position);
 }

@@ -6,9 +6,9 @@ Quaternion Quaternion_Identity()
 	return result;
 }
 
-Quaternion Quaternion_AxisAngle(float angle, Vector3 axis)
+Quaternion Quaternion_AxisAngle(float angle, vec3 axis)
 {
-	return (Quaternion) { Mathf_Sin(angle / 2.0f), Vector3_Multiply_F(Vector3_NormalizedSafe(axis), angle / 2.0f) };
+	return (Quaternion) { Mathf_Sin(angle / 2.0f), vec3_mulfiply_f(vec3_normalized_safe(axis), angle / 2.0f) };
 }
 
 Quaternion Quaternion_Inverse(Quaternion quat)
@@ -18,7 +18,7 @@ Quaternion Quaternion_Inverse(Quaternion quat)
 
 Quaternion Quaternion_Conjugate(Quaternion quat)
 {
-	return (Quaternion){quat.s, Vector3_Multiply_F(quat.v, -1.0f) };
+	return (Quaternion){quat.s, vec3_mulfiply_f(quat.v, -1.0f) };
 }
 
 Quaternion Quaternion_Normalize(Quaternion quat)
@@ -29,7 +29,7 @@ Quaternion Quaternion_Normalize(Quaternion quat)
 Quaternion Quaternion_FromMatrix(Matrix4 m)
 {
     float s = Mathf_Sqrt(m[0][0] + m[1][1] + m[2][2] + 1) / 2.0f;
-    Vector3 v = {
+    vec3 v = {
 		(m[2][1]  - m[1][2]) / (4.0f * s),
 		(m[0][2] - m[2][0]) / (4.0f * s),
 		(m[1][0] - m[0][1]) / (4.0f * s)
@@ -78,7 +78,7 @@ Quaternion Quaternion_Slerp(Quaternion a, Quaternion b, float t)
 
 float Quaternion_Dot(Quaternion a, Quaternion b)
 {
-	return a.s * b.s + Vector3_Dot(a.v, b.v);
+	return a.s * b.s + vec3_dot(a.v, b.v);
 }
 
 float Quaternion_Length(Quaternion quat)
@@ -86,7 +86,7 @@ float Quaternion_Length(Quaternion quat)
 	return Mathf_Sqrt(Quaternion_Dot(quat, quat));
 }
 
-Vector3 Quaternion_Rotate(Vector3 point, Quaternion quat)
+vec3 Quaternion_Rotate(vec3 point, Quaternion quat)
 {
 	Quaternion p = { 0.0f, point };
 	return Quaternion_Multiply(Quaternion_Multiply(quat, p), Quaternion_Conjugate(quat)).v;
@@ -94,31 +94,31 @@ Vector3 Quaternion_Rotate(Vector3 point, Quaternion quat)
 
 Quaternion Quaternion_Add(Quaternion a, Quaternion b)
 {
-	return (Quaternion) { a.s + b.s, Vector3_Add(a.v, b.v) };
+	return (Quaternion) { a.s + b.s, vec3_add(a.v, b.v) };
 }
 
 Quaternion Quaternion_Subtract(Quaternion a, Quaternion b)
 {
-	return (Quaternion) { a.s - b.s, Vector3_Subtract(a.v, b.v) };
+	return (Quaternion) { a.s - b.s, vec3_subtract(a.v, b.v) };
 }
 
 Quaternion Quaternion_Multiply(Quaternion a, Quaternion b)
 {
 	return (Quaternion) {
 		a.s * b.s - Quaternion_Dot(a, b),
-		Vector3_Add
+		vec3_add
 		(
-			Vector3_Add
+			vec3_add
 			(
-				Vector3_Multiply_F(a.v, b.s),
-				Vector3_Multiply_F(b.v, a.s)
+				vec3_mulfiply_f(a.v, b.s),
+				vec3_mulfiply_f(b.v, a.s)
 			),
-			Vector3_Cross(a.v, b.v)
+			vec3_cross(a.v, b.v)
 		)
 	};
 }
 
 Quaternion Quaternion_Multiply_F(Quaternion quat, float scalar)
 {
-	return (Quaternion) { quat.s * scalar, Vector3_Multiply_F(quat.v, scalar) };
+	return (Quaternion) { quat.s * scalar, vec3_mulfiply_f(quat.v, scalar) };
 }

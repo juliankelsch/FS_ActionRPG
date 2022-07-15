@@ -23,18 +23,18 @@ void Matrix4_Subtract(Matrix4 res, Matrix4 a, Matrix4 b);
 void Matrix4_Multiply(Matrix4 res, Matrix4 a, Matrix4 b);
 void Matrix4_Multiply_F(Matrix4 res, Matrix4 m, float s);
 
-void Matrix4_Translation(Matrix4 m, Vector3 t);
-void Matrix4_Scale(Matrix4 m, Vector3 s);
+void Matrix4_Translation(Matrix4 m, vec3 t);
+void Matrix4_Scale(Matrix4 m, vec3 s);
 
-Vector4 Matrix4_Multiply_V4(Matrix4 m, Vector4 p);
+vec4 Matrix4_Multiply_V4(Matrix4 m, vec4 p);
 
-Vector3 Matrix4_Multiply_Point3(Matrix4 m, Vector3 p);
-Vector3 Matrix4_Multiply_Direction3(Matrix4 m, Vector3 d);
+vec3 Matrix4_Multiply_Point3(Matrix4 m, vec3 p);
+vec3 Matrix4_Multiply_Direction3(Matrix4 m, vec3 d);
 
-void Matrix4_Basis(Matrix4 m, Vector3 x, Vector3 y, Vector3 z);
-void Matrix4_BasisP(Matrix4 m, Vector3 x, Vector3 y, Vector3 z, Vector3 position);
+void Matrix4_Basis(Matrix4 m, vec3 x, vec3 y, vec3 z);
+void Matrix4_BasisP(Matrix4 m, vec3 x, vec3 y, vec3 z, vec3 position);
 
-void Matrix4_LookAt(Matrix4 m, Vector3 eye, Vector3 target);
+void Matrix4_LookAt(Matrix4 m, vec3 eye, vec3 target);
 void Matrix4_Orthographic(Matrix4 m, float l, float r, float t, float b, float n, float f);
 void Matrix4_Frustum(Matrix4 m, float l, float r, float t, float b, float n, float f);
 void Matrix4_Perspective(Matrix4 m, float fovy, float aspect, float near, float far);

@@ -13,7 +13,7 @@
 typedef struct GUI GUI;
 
 
-GUI *GUI_Create(Arena *arena, Keyboard *keyboard, Mouse *mouse, TimeInfo *timeInfo, Vector2 screen);
+GUI *GUI_Create(Arena *arena, Keyboard *keyboard, Mouse *mouse, TimeInfo *timeInfo, vec2 screen);
 void GUI_Destroy(GUI *gui);
 
 void GUI_BeginFrame(GUI *gui);
@@ -90,17 +90,17 @@ RenderList2D *GUI_GetRenderList(GUI *gui);
 void GUI_TextStyle_CreateDefault(TextStyle *style);
 
 void GUI_Label(GUI *gui, const char *format, ...);
-void GUI_Image(GUI *gui, Vector2 size, uint32_t textureID);
+void GUI_Image(GUI *gui, vec2 size, uint32_t textureID);
 void GUI_EditFloat(GUI *gui, const char *label, float *value);
 void GUI_EditBool(GUI *gui, const char *label, bool *value);
-void GUI_EditVector3(GUI *gui, const char *label, Vector3 *value);
-void GUI_EditVector2(GUI *gui, const char *label, Vector3 *value);
+void GUI_EditVector3(GUI *gui, const char *label, vec3 *value);
+void GUI_EditVector2(GUI *gui, const char *label, vec3 *value);
 void GUI_EditEnum(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditFlags(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
 
-void RenderList2D_DrawImage(RenderList2D *renderList, Rect bounds, Vector2 imageSize, bool maintainAspect, Color tint, uint32_t textureID);
-Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text);
+void RenderList2D_DrawImage(RenderList2D *renderList, Rect bounds, vec2 imageSize, bool maintainAspect, Color tint, uint32_t textureID);
+vec2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, vec2 pos, Rect bounds, TextStyle *style, const char *text);
 void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text);
 void RenderList2D_DrawTextBuffer(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text, uint32_t textLength);
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color);

@@ -1,41 +1,46 @@
-#ifndef __FS_VECTOR3_H__
-#define __FS_VECTOR3_H__
+#ifndef __FS_VEC3_H__
+#define __FS_VEC3_H__
 
 #include "FS_Vector4.h"
 #include "FS_Mathf.h"
 
-typedef struct
+union vec3
 {
-	float x, y, z;
-} Vector3;
+	struct { float x, y, z; };
+	struct { float s, t, __unused; };
+	struct { float r, g, b; };
+	float e[3];
+};
 
-#define Vector3_Zero	(Vector3){0.0f, 0.0f, 0.0f}
-#define Vector3_One		(Vector3){1.0f, 1.0f, 1.0f}
+typedef union vec3 vec3;
 
-#define Vector3_X (Vector3){1.0f, 0.0f, 0.0f}
-#define Vector3_Y (Vector3){0.0f, 1.0f, 0.0f}
-#define Vector3_Z (Vector3){0.0f, 0.0f, 1.0f}
+#define vec3_zero	(vec3){0.0f, 0.0f, 0.0f}
+#define vec3_one		(vec3){1.0f, 1.0f, 1.0f}
 
-#define Vector3_Right	(Vector3){ 1.0f,  0.0f,  0.0f}
-#define Vector3_Left	(Vector3){-1.0f,  0.0f,  0.0f}
-#define Vector3_Up		(Vector3){ 0.0f,  1.0f,  0.0f}
-#define Vector3_Down	(Vector3){ 0.0f, -1.0f,  0.0f}
-#define Vector3_Forward (Vector3){ 0.0f,  0.0f,  1.0f}
-#define Vector3_Back	(Vector3){ 0.0f,  0.0f, -1.0f}
+#define vec3_x (vec3){1.0f, 0.0f, 0.0f}
+#define vec3_y (vec3){0.0f, 1.0f, 0.0f}
+#define vec3_z (vec3){0.0f, 0.0f, 1.0f}
 
-Vector3 Vector3_Create(float x, float y, float z);
-Vector3 Vector3_Add(Vector3 a, Vector3 b);
-Vector3 Vector3_Subtract(Vector3 a, Vector3 b);
-Vector3 Vector3_Multiply(Vector3 a, Vector3 b);
-Vector3 Vector3_Multiply_F(Vector3 v, float s);
-Vector3 Vector3_Cross(Vector3 a, Vector3 b);
-float Vector3_Dot(Vector3 a, Vector3 b);
-float Vector3_Length(Vector3 v);
-Vector3 Vector3_Normalized(Vector3 v);
-Vector3 Vector3_NormalizedSafe(Vector3 v);
-Vector3 Vector3_Direction(Vector3 from, Vector3 to);
-float Vector3_Distance(Vector3 a, Vector3 b);
-Vector3 Vector3_Lerp(Vector3 a, Vector3 b, float t);
-Vector3 Vector3_From_V4(Vector4 v);
+#define vec3_right	(vec3){ 1.0f,  0.0f,  0.0f}
+#define vec3_left	(vec3){-1.0f,  0.0f,  0.0f}
+#define vec3_up		(vec3){ 0.0f,  1.0f,  0.0f}
+#define vec3_down	(vec3){ 0.0f, -1.0f,  0.0f}
+#define vec3_forward (vec3){ 0.0f,  0.0f,  1.0f}
+#define vec3_back	(vec3){ 0.0f,  0.0f, -1.0f}
 
-#endif // __FS_VECTOR3_H__
+vec3 vec3_create(float x, float y, float z);
+vec3 vec3_add(vec3 a, vec3 b);
+vec3 vec3_subtract(vec3 a, vec3 b);
+vec3 vec3_multiply(vec3 a, vec3 b);
+vec3 vec3_mulfiply_f(vec3 v, float s);
+vec3 vec3_cross(vec3 a, vec3 b);
+float vec3_dot(vec3 a, vec3 b);
+float vec3_length(vec3 v);
+vec3 vec3_normalized(vec3 v);
+vec3 vec3_normalized_safe(vec3 v);
+vec3 vec3_direction(vec3 from, vec3 to);
+float vec3_distance(vec3 a, vec3 b);
+vec3 vec3_lerp(vec3 a, vec3 b, float t);
+vec3 vec3_from_vec4(vec4 v);
+
+#endif // __FS_VEC3_H__

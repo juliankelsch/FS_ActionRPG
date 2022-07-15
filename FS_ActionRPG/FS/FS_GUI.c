@@ -11,12 +11,12 @@ struct GUI
 	Mouse *mouse;
 	TimeInfo *timeInfo;
 
-	Vector2 screen;
+	vec2 screen;
 	TrueTypeFont font;
-	Vector2 cursor;
+	vec2 cursor;
 };
 
-GUI *GUI_Create(Arena *arena, Keyboard *keyboard, Mouse *mouse, TimeInfo *timeInfo, Vector2 screen)
+GUI *GUI_Create(Arena *arena, Keyboard *keyboard, Mouse *mouse, TimeInfo *timeInfo, vec2 screen)
 {
 	GUI *gui = Arena_Push(arena, GUI);
 	gui->screen = screen;
@@ -35,7 +35,7 @@ void GUI_Destroy(GUI *gui)
 
 void GUI_BeginFrame(GUI *gui)
 {
-	gui->cursor = (Vector2){0.0f, 0.0f};
+	gui->cursor = (vec2){0.0f, 0.0f};
 }
 
 void GUI_EndFrame(GUI *gui)
@@ -70,10 +70,10 @@ void GUI_Label(GUI *gui, const char *format, ...)
 
 }
 
-void GUI_Image(GUI *gui, Vector2 size, uint32_t textureID)
+void GUI_Image(GUI *gui, vec2 size, uint32_t textureID)
 {
 	RenderList2D *list = GUI_GetRenderList(gui);
-	RenderList2D_PushQuad(list, Vector2_Zero, size, Color_White, textureID);
+	RenderList2D_PushQuad(list, vec2_zero, size, Color_White, textureID);
 }
 
 void GUI_EditFloat(GUI *gui, const char *label, float *value)
@@ -83,8 +83,8 @@ void GUI_EditFloat(GUI *gui, const char *label, float *value)
 }
 
 void GUI_EditBool(GUI *gui, const char *label, bool *value);
-void GUI_EditVector3(GUI *gui, const char *label, Vector3 *value);
-void GUI_EditVector2(GUI *gui, const char *label, Vector3 *value);
+void GUI_EditVector3(GUI *gui, const char *label, vec3 *value);
+void GUI_EditVector2(GUI *gui, const char *label, vec3 *value);
 void GUI_EditEnum(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditFlags(GUI *gui, const char *label, const char **names, uint32_t *value);
 void GUI_EditText(GUI *gui, const char *label, uint32_t maxSize, char *value);
@@ -222,7 +222,7 @@ float TrueTypeFont_GetTextHeight(TrueTypeFont *font, const char *text, float lin
 // 
 // EndTextBlock();
 
-Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, Vector2 pos, Rect bounds, TextStyle *style, const char *text)
+vec2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *family, vec2 pos, Rect bounds, TextStyle *style, const char *text)
 {
 	TrueTypeFont *font = family->fonts + ((style->bold) + (style->italic * 2));
 
@@ -309,14 +309,14 @@ Vector2 RenderList2D_DrawText_Cursor(RenderList2D *renderList, FontFamily *famil
 
 void RenderList2D_DrawText(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text)
 {
-	RenderList2D_DrawText_Cursor(renderList, family, (Vector2) { bounds.x, bounds.y }, bounds, style, text);
+	RenderList2D_DrawText_Cursor(renderList, family, (vec2) { bounds.x, bounds.y }, bounds, style, text);
 }
 
 void RenderList2D_DrawTextBuffer(RenderList2D *renderList, FontFamily *family, Rect bounds, TextStyle *style, const char *text, uint32_t textLength)
 {
 	TrueTypeFont *font = family->fonts + ((style->bold) + (style->italic * 2));
 
-	Vector2 pos = bounds.pos;
+	vec2 pos = bounds.pos;
 	
 	Color topLeft, topRight, botLeft, botRight;
 	if (style->colorMode == ColorMode_Normal)
@@ -388,7 +388,7 @@ void RenderList2D_DrawTextBuffer(RenderList2D *renderList, FontFamily *family, R
 
 void RenderList2D_DrawRect(RenderList2D *renderList, Rect rect, Color color)
 {
-	RenderList2D_PushQuad(renderList, (Vector2) {rect.x, rect.y}, (Vector2) {rect.width, rect.height}, color, 0);
+	RenderList2D_PushQuad(renderList, (vec2) {rect.x, rect.y}, (vec2) {rect.width, rect.height}, color, 0);
 }
 
 void RenderList2D_DrawRectOutline(RenderList2D *renderList, Rect inner, Rect outer, Color color)

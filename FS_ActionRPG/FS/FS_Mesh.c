@@ -14,7 +14,7 @@ Mesh Mesh_CreateQuad(Arena *arena)
 	quad.vertices = Arena_PushArray(arena, quad.vertexCount, Vertex);
 	quad.indices =	Arena_PushArray(arena, quad.indexCount, uint32_t);
 
-	Vector3 normal = { 0, 0, 1 };
+	vec3 normal = { 0, 0, 1 };
 	Color color = { 255, 255, 255, 255 };
 
 	quad.vertices[0] = (Vertex){ {-0.5f, 0.5f}, normal, {0.0f, 1.0f}, color };
@@ -33,7 +33,7 @@ Mesh Mesh_CreateQuad(Arena *arena)
 	return quad;
 }
 
-Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, float size, uint32_t subDivisions)
+Mesh Mesh_CreatePlane(Arena *arena, vec3 baseA, vec3 baseB, float size, uint32_t subDivisions)
 {
 	Mesh mesh = { 0 };
 
@@ -45,7 +45,7 @@ Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, float size, ui
 	mesh.vertices = Arena_PushArray(arena, mesh.vertexCount, Vertex);
 	mesh.indices =	Arena_PushArray(arena, mesh.indexCount, uint32_t);
 
-	Vector3 normal = { 0, 1, 0 };
+	vec3 normal = { 0, 1, 0 };
 	Color color = { 255, 255, 255, 255 };
 	for (size_t i = 0; i < edgeCount; i++)
 	{
@@ -61,7 +61,7 @@ Mesh Mesh_CreatePlane(Arena *arena, Vector3 baseA, Vector3 baseB, float size, ui
 
 			vertex->normal = normal;
 			vertex->color = color;
-			vertex->texCoords = (Vector2){ (float)j / (edgeCount - 1), (float)i / (edgeCount - 1) };
+			vertex->texCoords = (vec2){ (float)j / (edgeCount - 1), (float)i / (edgeCount - 1) };
 		}
 	}
 
@@ -91,7 +91,7 @@ Mesh Mesh_CreateCube(Arena *arena)
 {
 	Mesh mesh = { 0 };
 
-	Vector3 normal = { 0, 1, 0 };
+	vec3 normal = { 0, 1, 0 };
 	Color color = { 255, 255, 255, 255 };
 
 	Vertex vertices[] =
@@ -190,15 +190,15 @@ Mesh Mesh_CreateSphere(Arena *arena, uint32_t horizontalSlices, uint32_t vertica
 			float phi = ((float)j / (verticalSlices - 1) - 0.5f) * 2 * Mathf_Pi;
 			float theta = ((float)i / (horizontalSlices + 1) - 0.5f) * Mathf_Pi;
 
-			vertex->position = (Vector3){
+			vertex->position = (vec3){
 				radius * Mathf_Cos(theta) * Mathf_Sin(phi),
 				radius * Mathf_Sin(theta),
 				radius * Mathf_Cos(theta) * Mathf_Cos(phi)
 			};
 
-			vertex->normal = Vector3_Normalized(vertex->position);
+			vertex->normal = vec3_normalized(vertex->position);
 			vertex->color = color;
-			vertex->texCoords = (Vector2){(float)i / (horizontalSlices - 1), (float)j / (verticalSlices - 1)};
+			vertex->texCoords = (vec2){(float)i / (horizontalSlices - 1), (float)j / (verticalSlices - 1)};
 
 			vertex++;
 		}
@@ -255,20 +255,20 @@ Mesh Mesh_CreateCircle(Arena *arena, float radius, uint32_t segments)
 	Color color = { 255, 255, 255, 255 };
 
 	Vertex *vertex = mesh.vertices;
-	vertex->position = Vector3_Zero;
-	vertex->normal = (Vector3){0, 1, 0};
+	vertex->position = vec3_zero;
+	vertex->normal = (vec3){0, 1, 0};
 	vertex->color = color;
-	vertex->texCoords = (Vector2){0.5f, 0.5f};
+	vertex->texCoords = (vec2){0.5f, 0.5f};
 	vertex++;
 
 	for (size_t i = 0; i < segments; i++)
 	{
 		float angle = ((float)i / (segments - 1)) * 2 * Mathf_Pi;
 
-		vertex->position = (Vector3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
-		vertex->normal = (Vector3){0, 1, 0};
+		vertex->position = (vec3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
+		vertex->normal = (vec3){0, 1, 0};
 		vertex->color = color;
-		vertex->texCoords = (Vector2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
+		vertex->texCoords = (vec2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
 		vertex++;
 	}
 
@@ -295,27 +295,27 @@ Mesh Mesh_CreateCone(Arena *arena, float height, float radius, uint32_t segments
 	Color color = { 255, 255, 255, 255 };
 
 	Vertex *vertex = mesh.vertices;
-	vertex->position = Vector3_Zero;
-	vertex->normal = (Vector3){0, 1, 0};
+	vertex->position = vec3_zero;
+	vertex->normal = (vec3){0, 1, 0};
 	vertex->color = color;
-	vertex->texCoords = (Vector2){0.5f, 0.5f};
+	vertex->texCoords = (vec2){0.5f, 0.5f};
 	vertex++;
 
 	for (size_t i = 0; i < segments; i++)
 	{
 		float angle = ((float)i / (segments - 1)) * 2 * Mathf_Pi;
 
-		vertex->position = (Vector3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
-		vertex->normal = (Vector3){0, 1, 0};
+		vertex->position = (vec3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
+		vertex->normal = (vec3){0, 1, 0};
 		vertex->color = color;
-		vertex->texCoords = (Vector2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
+		vertex->texCoords = (vec2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
 		vertex++;
 	}
 
-	vertex->position = (Vector3){0.0f, height, 0.0f};
-	vertex->normal = (Vector3){0, 1, 0};
+	vertex->position = (vec3){0.0f, height, 0.0f};
+	vertex->normal = (vec3){0, 1, 0};
 	vertex->color = color;
-	vertex->texCoords = (Vector2){0.5f, 0.5f};
+	vertex->texCoords = (vec2){0.5f, 0.5f};
 	vertex++;
 
 	uint32_t *index = mesh.indices;
@@ -345,26 +345,26 @@ Mesh Mesh_CreateCylinder(Arena *arena, float height, float radius, uint32_t segm
 	Color color = { 255, 255, 255, 255 };
 
 	Vertex *vertex = mesh.vertices;
-	vertex->position = Vector3_Zero;
-	vertex->normal = (Vector3){0, 1, 0};
+	vertex->position = vec3_zero;
+	vertex->normal = (vec3){0, 1, 0};
 	vertex->color = color;
-	vertex->texCoords = (Vector2){0.5f, 0.5f};
+	vertex->texCoords = (vec2){0.5f, 0.5f};
 	vertex++;
 
-	vertex->position = (Vector3){0.0f, height, 0.0f};
-	vertex->normal = (Vector3){0, 1, 0};
+	vertex->position = (vec3){0.0f, height, 0.0f};
+	vertex->normal = (vec3){0, 1, 0};
 	vertex->color = color;
-	vertex->texCoords = (Vector2){0.5f, 0.5f};
+	vertex->texCoords = (vec2){0.5f, 0.5f};
 	vertex++;
 
 	for (size_t i = 0; i < segments; i++)
 	{
 		float angle = ((float)i / (segments - 1)) * 2 * Mathf_Pi;
 
-		vertex->position = (Vector3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
-		vertex->normal = (Vector3){0, 1, 0};
+		vertex->position = (vec3){ radius * Mathf_Cos(angle), 0.0f, radius * Mathf_Sin(angle)};
+		vertex->normal = (vec3){0, 1, 0};
 		vertex->color = color;
-		vertex->texCoords = (Vector2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
+		vertex->texCoords = (vec2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
 		vertex++;
 	}
 
@@ -372,10 +372,10 @@ Mesh Mesh_CreateCylinder(Arena *arena, float height, float radius, uint32_t segm
 	{
 		float angle = ((float)i / (segments - 1)) * 2 * Mathf_Pi;
 
-		vertex->position = (Vector3){ radius * Mathf_Cos(angle), height, radius * Mathf_Sin(angle)};
-		vertex->normal = (Vector3){0, 1, 0};
+		vertex->position = (vec3){ radius * Mathf_Cos(angle), height, radius * Mathf_Sin(angle)};
+		vertex->normal = (vec3){0, 1, 0};
 		vertex->color = color;
-		vertex->texCoords = (Vector2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
+		vertex->texCoords = (vec2){Mathf_Cos(angle) * 0.5f + 0.5f, Mathf_Sin(angle) * 0.5f + 0.5f};
 		vertex++;
 	}
 

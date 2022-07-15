@@ -12,7 +12,7 @@ typedef bool UpdateFunc(void *userData, Application *app);
 
 typedef struct
 {
-	Vector2Int windowSize;
+	vec2i windowSize;
 	const char *windowTitle;
 
 	void *userData;
@@ -21,7 +21,7 @@ typedef struct
 
 void Application_Run(ApplicationSettings *settings);
 
-Vector2Int Application_GetScreenSize(Application *app);
+vec2i Application_GetScreenSize(Application *app);
 Mouse *Application_GetMouse(Application *app);
 Keyboard *Application_GetKeyboard(Application *app);
 TimeInfo *Application_GetTimeInfo(Application *app);

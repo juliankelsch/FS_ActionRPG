@@ -7,11 +7,11 @@
 typedef struct
 {
 	float s;
-	Vector3 v;
+	vec3 v;
 } Quaternion;
 
 Quaternion Quaternion_Identity();
-Quaternion Quaternion_AxisAngle(float angle, Vector3 axis);
+Quaternion Quaternion_AxisAngle(float angle, vec3 axis);
 
 Quaternion Quaternion_Inverse(Quaternion quat);
 Quaternion Quaternion_Conjugate(Quaternion quat);
@@ -21,7 +21,7 @@ void Quaternion_ToMatrix(Matrix4 matrix, Quaternion quat);
 Quaternion Quaternion_Slerp(Quaternion a, Quaternion b, float t);
 float Quaternion_Dot(Quaternion a, Quaternion b);
 float Quaternion_Length(Quaternion quat);
-Vector3 Quaternion_Rotate(Vector3 point, Quaternion quat);
+vec3 Quaternion_Rotate(vec3 point, Quaternion quat);
 
 Quaternion Quaternion_Add(Quaternion a, Quaternion b);
 Quaternion Quaternion_Subtract(Quaternion a, Quaternion b);

@@ -2,9 +2,9 @@
 
 void Transform_Create(Transform *transform)
 {
-	transform->position = (Vector3){0, 0, 0};
+	transform->position = (vec3){0, 0, 0};
 	transform->rotation = (Quaternion){1, 0, 0, 0};
-	transform->localScale = (Vector3){0, 0, 0};
+	transform->localScale = (vec3){0, 0, 0};
 }
 
 void Transform_GetMatrix(Transform *transform, Matrix4 out)

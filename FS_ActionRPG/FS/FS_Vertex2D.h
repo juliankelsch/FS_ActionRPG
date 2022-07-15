@@ -6,8 +6,8 @@
 
 typedef struct
 {
-	Vector2 position;
-	Vector2 texCoords;
+	vec2 position;
+	vec2 texCoords;
 	Color color;
 } Vertex2D;
 
